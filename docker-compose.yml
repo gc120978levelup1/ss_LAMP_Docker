@@ -1,0 +1,49 @@
+
+networks:
+  lamp-docker-network:
+    driver: bridge
+services:
+  database.jaed.com:
+    build: 
+      context: ./context/mysql
+    container_name: 'www-latest-mysql-server'
+    restart: 'always'
+    environment:
+      MYSQL_ROOT_PASSWORD: ''
+      MYSQL_ROOT_HOST: '%'
+      MYSQL_DATABASE: '${DB_DATABASE}'
+      MYSQL_USER: '${DB_USERNAME}'
+      MYSQL_PASSWORD: '${DB_PASSWORD}'
+      MYSQL_ALLOW_EMPTY_PASSWORD: 1
+    volumes:
+      - "./database_folder:/docker-entrypoint-initdb.d"
+    ports:
+      - '3306:3306'
+    networks:
+      - lamp-docker-network
+
+  www.jaed.com:
+    build: 
+      context: ./context/php-apache
+    container_name: 'www-php-8-2-apache-server'
+    restart: 'always'
+    volumes:
+      - '.:/var/www/html'
+    ports:
+      - 80:80
+      - 443:443
+    networks:
+      - lamp-docker-network
+
+  phpmyadmin.jaed.com:
+    build: 
+      context: ./context/phpmyadmin
+    container_name: 'www-phpmyadmin-server'
+    restart: 'always'
+    ports:
+      - 8001:80
+    environment:
+      - PMA_HOST=database.jaed.com
+      - PMA_PORT=3306
+    networks:
+      - lamp-docker-network
