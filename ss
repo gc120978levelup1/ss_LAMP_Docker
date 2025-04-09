@@ -2,13 +2,13 @@
 
 # Copy the appropriate .env file and docker-compose.yml
 # equal to DB_DATABASE in .env
-database_name="www-jaed-com"
+database_name="www-garry-com"
 
 # Database Server Container Name in docker-compose.yml (mysql)
-database_server="www-latest-mysql-server"
+database_server="database.garry.com"
 
 # Webserver (WWW) Container Name in docker-compose.yml (apache/php)
-webserver_name="www-php-8-2-apache-server"
+webserver_name="www.garry.co"
 
 function control_panel {
     echo "============================================================="
@@ -34,7 +34,7 @@ elif [ $1 == "down" ]
 then
     clear
     echo "backing up mssql database down Garry's Mod server..."
-    docker exec www-latest-mysql-server mysqldump -h localhost -u root $database_name > ./database_folder/$database_name.sql
+    docker exec $database_server mysqldump -h localhost -u root $database_name > ./database_folder/$database_name.sql
     echo "Shutting down Garry's Mod server..."
     docker-compose down
     control_panel
@@ -43,8 +43,8 @@ then
     clear
     echo "database migration..."
     php artisan migrate
-    echo "backing up mssql database down Garry's Mod server..."
-    docker exec www-latest-mysql-server mysqldump -h localhost -u root $database_name > ./database_folder/$database_name.sql
+    echo "backing up mysql database down Garry's Mod server..."
+    docker exec $database_server mysqldump -h localhost -u root $database_name > ./database_folder/$database_name.sql
     control_panel
 elif [ $1 == "dev" ]
 then
@@ -57,7 +57,7 @@ elif [ $1 == "bkup" ]
 then
     clear
     echo "backing up mssql database down Garry's Mod server..."
-    docker exec www-latest-mysql-server mysqldump -h localhost -u root $database_name > ./database_folder/$database_name.sql
+    docker exec $database_server mysqldump -h localhost -u root $database_name > ./database_folder/$database_name.sql
     control_panel
 elif [ $1 == "visit-db" ]
 then
