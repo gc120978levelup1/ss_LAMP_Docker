@@ -63,7 +63,7 @@ cd ..
 ### Launch Initial Data Migration in  (Git Bash Terminal)
 
 ```sh
-./ss migration
+./ss migrate
 ```
 
 ### Now Your Project (Production) is ONLINE!!!!

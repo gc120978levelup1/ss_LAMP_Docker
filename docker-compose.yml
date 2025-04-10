@@ -18,7 +18,7 @@ services:
     volumes:
       - "./database_folder:/docker-entrypoint-initdb.d"
     ports:
-      - '3306:3306'
+      - '${DB_PORT}:3306'
     networks:
       - lamp-docker-network
 
