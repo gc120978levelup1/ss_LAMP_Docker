@@ -21,7 +21,7 @@ All this Host Names can be found in docker-compose.yml file
 sudo nano /mnt/c/windows/system32/drivers/etc/hosts
 ```
 
-# add the following items at the bottom of the list and save the file
+### add the following items at the bottom of the list and save the file
 
 ```sh
 127.0.0.1 database.garry.com
