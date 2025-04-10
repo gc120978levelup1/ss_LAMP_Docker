@@ -11,7 +11,7 @@ database_server="database.garry.com"
 webserver_name="www.garry.com"
 
 function control_panel {
-    echo "============================================================="
+    echo "==================================================================="
     echo "  Usage: $0 check     - Check the status of the containers"
     echo "         $0 merge     - Merge this ss_DOCKER_LAMP to main project"
     echo "         $0 up        - Start the Garry's Mod server"
@@ -84,6 +84,9 @@ then
     echo "Marging Garry's Mod server to Project...$2"
     cp -r -a ./. ../
     control_panel
+    echo "Invoke a cd .. command in order to go back to main folder"
+    echo "   "
+    echo "   cd .. "
 else
     clear
     control_panel
