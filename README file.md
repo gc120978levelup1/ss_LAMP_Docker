@@ -6,25 +6,31 @@ a simple DOCKER Full Stack LAMP server for Laravel Development
 [VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
 
 ## Pre-requisite (WSL2)
-* Docker + WSL2 + Git + Composer + Laravel + Nodejs (+ Vue)
+* Docker + WSL2 + Ubuntu + Git + Composer + Laravel + Nodejs (+ Vue)
 * Make sure DOCKER is running when executing the command lines below
 * Make A New Laravel project and wait until its totally done
 * Copy and Paste All this fileS (DOCKER Full Stack LAMP server) to the newly created Laravel project
 * Open .env file and change the DB_DATABASE value as per liking
 * Open ss file and change the value of database_name as per above DB_DATABASE value
 
+## run WSL2 as an administrator mode
 ## Set All the Docker Services Names to point to 127.0.0.1 Hostname (use WSL2 terminal)
 All this Host Names can be found in docker-compose.yml file
 
 ```sh
 sudo nano /mnt/c/windows/system32/drivers/etc/hosts
-# add the following items at the bottom of the list ans save
+```
+
+# add the following items at the bottom of the list and save the file
+
+```sh
 127.0.0.1 database.garry.com
 127.0.0.1 www.garry.com
 127.0.0.1 phpmyadmin.garry.com
 ```
 
-### (use Git Bash Terminal) Download this ss_LAMP_DOCKER folder INSIDE YOUR PROJEECT and wait until done downloading (use Git Bash Terminal)
+### From here on wards, use Git Bash Terminal
+### (use Git Bash Terminal) Download this ss_LAMP_DOCKER folder INSIDE YOUR PROJECT and wait until done downloading (use Git Bash Terminal)
 
 ```sh
 git clone --recursive https://github.com/gc120978levelup1/ss_LAMP_Docker.git
