@@ -24,13 +24,13 @@ sudo nano /mnt/c/windows/system32/drivers/etc/hosts
 127.0.0.1 phpmyadmin.jaed.com
 ```
 
-### (use Git Bash Terminal) Download this ss_LAMP_DOCKER folder and wait until done downloading (use Git Bash Terminal)
+### (use Git Bash Terminal) Download this ss_LAMP_DOCKER folder INSIDE YOUR PROJEECT and wait until done downloading (use Git Bash Terminal)
 
 ```sh
 git clone --recursive https://github.com/gc120978levelup1/ss_LAMP_Docker.git
 ```
 
-### Go this ss_LAMP_DOCKER (Git Bash Terminal)
+### Go inside this ss_LAMP_DOCKER folder (Git Bash Terminal)
 
 ```sh
 cd ss_LAMP_DOCKER
