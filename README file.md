@@ -67,8 +67,19 @@ cd ..
 ```
 
 ### Now Your Project (Production) is ONLINE!!!!
-using your browser, visit the www address as per specified in the service (docker-compose.yml file)
-ex. www.jaed.com
+* Using your browser, visit the www address as per specified in the service (docker-compose.yml file)
+ex. [WWW_SERVER](http://www.garry.com)
+
+* Using your browser, visit the phpmyadmin address as per specified in the service (docker-compose.yml file)
+ex. [PhpMyAdminServer](http://www.garry.com:8001)
+
+* mysql_dbase_port: 14344
+* mysql_dbase_name: www-garry-com
+* user : xuser5345345
+* password: 234we3243345353
+* user : root
+* password:
+
 
 ### Run The Development Mode to Edit Things  (Git Bash Terminal)
 
