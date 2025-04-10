@@ -6,7 +6,7 @@ services:
   database.garry.com:
     build: 
       context: ./context/mysql
-    container_name: 'www-latest-mysql-server'
+    container_name: 'database.garry.com'
     restart: 'always'
     environment:
       MYSQL_ROOT_PASSWORD: ''
@@ -25,7 +25,7 @@ services:
   www.garry.com:
     build: 
       context: ./context/php-apache
-    container_name: 'www-php-8-2-apache-server'
+    container_name: 'www.garry.com'
     restart: 'always'
     volumes:
       - '.:/var/www/html'

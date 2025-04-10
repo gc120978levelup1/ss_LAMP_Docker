@@ -8,7 +8,7 @@ database_name="www-garry-com"
 database_server="database.garry.com"
 
 # Webserver (WWW) Container Name in docker-compose.yml (apache/php)
-webserver_name="www.garry.co"
+webserver_name="www.garry.com"
 
 function control_panel {
     echo "============================================================="
