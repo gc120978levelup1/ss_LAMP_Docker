@@ -56,3 +56,18 @@ ex. www.jaed.com
 ```sh
 ./ss down
 ```
+
+
+### Shut Down Container in  (Git Bash Terminal)
+
+    =============================================================
+      Usage: $0 check     - Check the status of the containers
+             $0 up        - Start the Garry's Mod server
+             $0 down      - Stop the Garry's Mod server
+             $0 migrate   - Execute database migration
+             $0 dev       - Launch the development server
+             $0 bkup      - Backup the database
+             $0 visit-db  - Visit the database container
+             $0 visit-www - Visit the web server container
+             $0 help      - Show this help message
+             $0 -h        - Show this help message
