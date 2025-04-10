@@ -13,6 +13,7 @@ webserver_name="www.garry.com"
 function control_panel {
     echo "============================================================="
     echo "  Usage: $0 check     - Check the status of the containers"
+    echo "         $0 merge     - Merge this ss_DOCKER_LAMP to main project"
     echo "         $0 up        - Start the Garry's Mod server"
     echo "         $0 down      - Stop the Garry's Mod server"
     echo "         $0 migrate   - Execute database migration"
@@ -76,6 +77,12 @@ then
     clear
     echo "Checking Garry's Mod server...$2"
     docker-compose ps
+    control_panel
+elif [ $1 == "merge" ]
+then
+    clear
+    echo "Marging Garry's Mod server to Project...$2"
+    cp -r -a ./. ../
     control_panel
 else
     clear
