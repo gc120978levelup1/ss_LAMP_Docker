@@ -48,7 +48,7 @@ ex. www.jaed.com
 ### Run The Development Mode to Edit Things  (Git Bash Terminal)
 
 ```sh
-,/ss dev
+./ss dev
 ```
 
 ### Shut Down Container in  (Git Bash Terminal)
