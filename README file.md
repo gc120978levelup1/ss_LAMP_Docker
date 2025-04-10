@@ -19,9 +19,9 @@ All this Host Names can be found in docker-compose.yml file
 ```sh
 sudo nano /mnt/c/windows/system32/drivers/etc/hosts
 # add the following items at the bottom of the list ans save
-127.0.0.1 database.jaed.com
-127.0.0.1 www.jaed.com
-127.0.0.1 phpmyadmin.jaed.com
+127.0.0.1 database.garry.com
+127.0.0.1 www.garry.com
+127.0.0.1 phpmyadmin.garry.com
 ```
 
 ### (use Git Bash Terminal) Download this ss_LAMP_DOCKER folder INSIDE YOUR PROJEECT and wait until done downloading (use Git Bash Terminal)
