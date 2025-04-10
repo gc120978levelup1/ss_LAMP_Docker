@@ -82,7 +82,11 @@ elif [ $1 == "merge" ]
 then
     clear
     echo "Marging Garry's Mod server to Project...$2"
-    cp -r -a ./. ../
+    cp -r -a ./context ../
+    cp -r -a ./database_folder ../
+    cp -r -a ./.env ../
+    cp -r -a ./docker-compose.yml ../
+    cp -r -a ./ss ../
     control_panel
     echo "Invoke a cd .. command in order to go back to main folder"
     echo "   "

@@ -23,6 +23,18 @@ sudo nano /mnt/c/windows/system32/drivers/etc/hosts
 127.0.0.1 phpmyadmin.jaed.com
 ```
 
+### Merge to main file (Git Bash Terminal)
+
+```sh
+./ss merge
+```
+
+### Come out of ss_LAMP_DOCKER folder (Git Bash Terminal)
+
+```sh
+cd ..
+```
+
 ### Check Containers Status in (Git Bash Terminal)
 
 ```sh
@@ -48,7 +60,7 @@ ex. www.jaed.com
 ### Run The Development Mode to Edit Things  (Git Bash Terminal)
 
 ```sh
-,/ss dev
+./ss dev
 ```
 
 ### Shut Down Container in  (Git Bash Terminal)
@@ -59,8 +71,9 @@ ex. www.jaed.com
 
 ### Shut Down Container in  (Git Bash Terminal)
 
-    =============================================================
+    =====================================================================
       Usage: ./ss check     - Check the status of the containers
+             ./ss merge     - Merge this ss_DOCKER_LAMP to main project
              ./ss up        - Start the Garry's Mod server
              ./ss down      - Stop the Garry's Mod server
              ./ss migrate   - Execute database migration
