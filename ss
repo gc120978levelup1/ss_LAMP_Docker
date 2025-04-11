@@ -76,7 +76,7 @@ elif [ $1 == "check" ]
 then
     clear
     echo "Checking Garry's Mod server...$2"
-    docker-compose ps
+    docker ps
     control_panel
 elif [ $1 == "merge" ]
 then
