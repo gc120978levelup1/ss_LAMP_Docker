@@ -98,10 +98,16 @@ Add the following code in [return new class extends Migration] function
 Note: The sample code is for Laravel + Inertia + Vue
 
 ```sh
-    use Inertia\Inertia;
-    
-    ......
+<?php
 
+namespace App\Http\Controllers;
+use Inertia\Inertia;
+use App\Models\Complaint;
+use App\Http\Requests\StoreComplaintRequest;
+use App\Http\Requests\UpdateComplaintRequest;
+
+class ComplaintController extends Controller
+{
     public function index()
     {
         return Inertia::render('viewjs/complaint/index', [
@@ -136,18 +142,24 @@ Note: The sample code is for Laravel + Inertia + Vue
             ['complaint' => $complaint]
         );
     }
+
+    // this must be called using POST if image_file is included
     public function update(UpdateComplaintRequest $request, Complaint $complaint)
     {
         // if update includes saving images, it should ne called by post not put or patch
         $image_path = '';
         if (!$request->hasFile('image_file')) {
-            $complaint->update($request->all());
             $image_path = '/storage/' . $request->file('image_file')->store('image', 'public');
             $request->merge(['image' => $image_path]);
+            $complaint->update($request->all());
         }
+        $complaint->update($request->all());
         return redirect()->route('complaint.show', ['complaint' => $complaint]);
     }
+}
+
 ```
+
 ### Request files
 
 * app/Http/Requests/StoreComplaintRequest.php
