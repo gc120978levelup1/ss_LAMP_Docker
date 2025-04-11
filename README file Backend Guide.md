@@ -21,14 +21,14 @@ Note: model name should be capitalized and singular forn
 php artisan make:Model Complaint -a
 ```
 
-## Files to be Edited After making a Model
+## Files to be Edited After making a [Model](https://laravel.com/docs/12.x/eloquent)
 
-### Migration files
+### [Migration files](https://laravel.com/docs/12.x/migrations)
 
 * database/migrations/xxxx_xx_xx_xxxxxx_create_complaints_table.php
 * database/migrations/xxxx_xx_xx_xxxxxx_add_description_to_complaints.php
 
-To Add New Column to an existing table
+To Add New Column to an existing table:
 ```sh
    php artisan make:migration add_description_to_complaints --table="complaints"
 ```
@@ -45,9 +45,11 @@ To Add New Column to an existing table
 	$table->dropColumn('description')->nullable();
 ```
 
-### Controller File
+### [Controller File](https://laravel.com/docs/12.x/controllers#main-content)
 
 * app/Http/Controllers/ComplaintController.php
+
+Note: The sample code is for Laravel + Inertia + Vue
 
 ```sh
     use Inertia\Inertia;
@@ -105,6 +107,7 @@ To Add New Column to an existing table
 * app/Http/Requests/StoreComplaintRequest.php
 * app/Http/Requests/UpdateComplaintRequest.php
 
+Note: Add this code inside the Request class to ensure proper read/write access
 ```sh
     public function authorize(): bool
     {
@@ -112,10 +115,11 @@ To Add New Column to an existing table
     }
 ```
 
-### Model file
+### [Model file](https://laravel.com/docs/12.x/eloquent#generating-model-classes)
 
 * app/Http/Models/Complaint.php
 
+Note: Add this code inside the model class to ensure proper read/write access
 ```sh
     protected $guarded = ['id'];
 ```
@@ -123,6 +127,8 @@ To Add New Column to an existing table
 ### Route file
 
 * routes/web.php
+
+Sample Routes Code
 
 ```sh
   use App\Http\Controllers\ComplaintController;
@@ -148,4 +154,6 @@ php artisan migrate
 php artisan make:Model Complaint -a
 php artisan migrate:rollback
 php artisan make:migration add_description_to_complaints --table="complaints"
-```sh
+```
+
+## [MiddleWare](https://laravel.com/docs/12.x/middleware)
