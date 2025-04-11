@@ -7,7 +7,7 @@
 
 ### package.json, in scripts
 
-       * "serve": "concurrently  \"npm run dev\" \"php artisan serve\"",
+*   "serve": "concurrently  \"npm run dev\" \"php artisan serve\"",
 
 ### Create Complete Model, Controller, Request, migrations
 Note: model name should be capitalized and singular forn
@@ -16,9 +16,13 @@ Note: model name should be capitalized and singular forn
 
 ### Files to be Edited After making a Model
 
-database/migrations/xxxx_xx_xx_xxxxxx_create_complaints_table.php
-database/migrations/xxxx_xx_xx_xxxxxx_add_description_to_complaints.php
+* database/migrations/xxxx_xx_xx_xxxxxx_create_complaints_table.php
+* database/migrations/xxxx_xx_xx_xxxxxx_add_description_to_complaints.php
+
+```sh
    php artisan make:migration add_description_to_complaints --table="complaints"
+```
+```sh
 	$table->foreignId('user_id')->constrained();
 	$table->double('column_name', 15, 8);
 	$table->string('description')->nullable(); 
@@ -26,6 +30,7 @@ database/migrations/xxxx_xx_xx_xxxxxx_add_description_to_complaints.php
 	$table->text('column_name');
 	$table->bigInteger('column_name');
 	$table->dropColumn('description')->nullable();
+```
 
 app/Http/Controllers/ComplaintController.php
     >>
