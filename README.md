@@ -72,25 +72,26 @@ cd ..
 ```
 
 ### Now Your Project (Production) is ONLINE!!!!
-* Using your browser, visit the www address as per specified in the service (docker-compose.yml file)
-ex. [WWW_SERVER](http://www.garry.com)
+* In your project .env file change DB_PORT=33061 to DB_PORT=3306 in order to open production site [WWW_SERVER](http://www.garry.com)
 
 * Using your browser, visit the phpmyadmin address as per specified in the service (docker-compose.yml file)
 ex. [PhpMyAdminServer](http://www.garry.com:8001)
 
-* mysql_dbase_port: 14344
+* mysql_dbase_port: 33061
 * mysql_dbase_name: www-garry-com
 * user : xuser5345345
 * password: 234we3243345353
 * user : root
 * password:
 
-
 ### Run The Development Mode to Edit Things  (Git Bash Terminal)
-
+* In your project .env file change DB_PORT=3306 to DB_PORT=33061
 ```sh
 ./ss dev
 ```
+### Uou can NOW Open Your [Development Site!!!](http://127.0.0.1:8000/)
+
+You can now be able to start coding your application and see the changes on the development site rite away.
 
 ### Shut Down Container in  (Git Bash Terminal)
 
@@ -98,8 +99,7 @@ ex. [PhpMyAdminServer](http://www.garry.com:8001)
 ./ss down
 ```
 
-### Shut Down Container in  (Git Bash Terminal)
-
+### List of ss_LAMP_Docker commands
     =====================================================================
       Usage: ./ss check     - Check the status of the containers
              ./ss merge     - Merge this ss_DOCKER_LAMP to main project
