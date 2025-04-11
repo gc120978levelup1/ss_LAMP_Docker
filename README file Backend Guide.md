@@ -214,3 +214,5 @@ php artisan make:migration add_description_to_complaints --table="complaints"
 ```
 
 ## [MiddleWare](https://laravel.com/docs/12.x/middleware)
+
+#  [Guide For FrontEnd Coding](https://github.com/gc120978levelup1/ss_LAMP_Docker/blob/master/README%20file%20Frontend%20Guide.md)
