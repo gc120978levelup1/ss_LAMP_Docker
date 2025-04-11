@@ -113,3 +113,7 @@ ex. [PhpMyAdminServer](http://www.garry.com:8001)
              ./ss visit-www - Visit the web server container
              ./ss help      - Show this help message
              ./ss -h        - Show this help message
+
+# [Guide For BackEnd Coding](https://github.com/gc120978levelup1/ss_LAMP_Docker/blob/master/README%20file%20Backend%20Guide.md)
+
+# [Guide For FrontEnd Coding](https://github.com/gc120978levelup1/ss_LAMP_Docker/blob/master/README%20file%20Frontend%20Guide.md)

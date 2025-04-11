@@ -143,9 +143,9 @@ Sample Routes Code
   });
 ```
 
-## summary
+## Summary
 
-### Important Migration Commands
+### Important Migration Commands:
 
 ```sh
 php artisan key:generate
