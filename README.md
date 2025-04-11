@@ -9,14 +9,12 @@ a simple DOCKER Full Stack LAMP server for Laravel Development
 * Docker + WSL2 + Ubuntu + Git + Composer + Laravel + Nodejs (+ Vue)
 * Make sure DOCKER is running when executing the command lines below
 * Make A New Laravel project and wait until its totally done
-* Copy and Paste All this fileS (DOCKER Full Stack LAMP server) to the newly created Laravel project
-* Open .env file and change the DB_DATABASE value as per liking
-* Open ss file and change the value of database_name as per above DB_DATABASE value
 
-## run WSL2 as an administrator mode
 ## Set All the Docker Services Names to point to 127.0.0.1 Hostname (use WSL2 terminal)
-All this Host Names can be found in docker-compose.yml file
 
+### Run WSL2 as an administrator mode
+
+All this Host Names can be found in docker-compose.yml file
 ```sh
 sudo nano /mnt/c/windows/system32/drivers/etc/hosts
 ```
