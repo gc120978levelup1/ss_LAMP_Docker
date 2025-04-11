@@ -7,8 +7,13 @@ a simple DOCKER Full Stack LAMP server for Laravel Development
 
 ## Pre-requisite before using ss_LAMP_Docker
 * [Docker + WSL2](https://docs.docker.com/get-started/get-docker/) + [Ubuntu](https://documentation.ubuntu.com/wsl/en/latest/howto/install-ubuntu-wsl2/) + [Git](https://git-scm.com/downloads) + [Composer](https://getcomposer.org/download/) + [Laravel](https://laravel.com/docs/12.x/installation) + [Nodejs](https://nodejs.org/en/download) + [Vue3](https://vuejs.org/) + [VSCode](https://code.visualstudio.com/Download)
+* [Setup Docker to work nicely with WSL2.](https://learn.microsoft.com/en-us/windows/wsl/tutorials/wsl-containers)
 * Make sure DOCKER is running when executing the command lines below
-* Make A New Laravel project and wait until its totally done
+
+### In PowerShell, Make A [New Laravel project](https://laravel.com/docs/12.x/installation#creating-an-application) and wait until its totally done
+```sh
+laravel new
+```
 
 ## Set All the Docker Services Names to point to 127.0.0.1 Hostname (use WSL2 terminal)
 
@@ -27,7 +32,7 @@ sudo nano /mnt/c/windows/system32/drivers/etc/hosts
 127.0.0.1 phpmyadmin.garry.com
 ```
 
-## Open Your LARAVEL Project using [VSCode](https://code.visualstudio.com/)
+## Open Your LARAVEL Project Folder using [VSCode](https://code.visualstudio.com/)
 ### From from VSCode, launch Git Bash Terminal
 ### (use Git Bash Terminal) Download this ss_LAMP_DOCKER folder INSIDE YOUR PROJECT and wait until done downloading (use Git Bash Terminal)
 
