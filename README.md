@@ -64,6 +64,12 @@ cd ..
 ./ss check
 ```
 
+## If there are indication of running containers instances, shut it all down.
+
+```sh
+docker ps -aq | xargs docker stop | xargs docker rm
+```
+
 ## Launch Containers in  (Git Bash Terminal) (node + composer)
 
 ```sh
