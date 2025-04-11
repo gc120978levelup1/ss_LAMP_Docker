@@ -1,53 +1,74 @@
 
 # Front End Sample Code Guide ([Laravel 12](https://laravel.com/docs/12.x/installation))
 
-### shadcn components
-https://ui.shadcn.com/docs/components/accordion
+### shadcn components (primary laravel 12 frontend component)
+* https://ui.shadcn.com/docs/components/accordion
 
-### Editing Main Side Bar Menu App Logo Icon (SVG)
-/resources/js/components/AppLogoIcon.vue
+### File for Editing Main Side Bar Menu App Logo Icon (SVG)
+* /resources/js/components/AppLogoIcon.vue
 
-### Editing Main Side Bar Menu App Title (Upper Left)
-/resources/js/components/AppLogo.vue
+### File for Editing Main Side Bar Menu App Title (Upper Left)
+* /resources/js/components/AppLogo.vue
 
-### Editing Main Side Bar Menu "Platform"
-/resources/js/components/NavMain.vue
+### File for Editing Main Side Bar Menu "Platform"
+* /resources/js/components/NavMain.vue
 
-### Editing Main Side Bar Menu (below "Platform")*most important
+### File for Editing Main Side Bar Menu (below "Platform")*most important
 ### Add More Menu in the Side Bar
-/resources/js/components/AppSidebar.vue
+* /resources/js/components/AppSidebar.vue
 
-### User Button Contents in the Main Sidebar
-/resources/js/components/UserInfo.vue
+### File for User Button Contents in the Main Sidebar
+* /resources/js/components/UserInfo.vue
 
-### User Menu Drop Down inside the Main Sidebar
-/resources/js/components/UserMenuContent.vue
+### File for User Menu Drop Down inside the Main Sidebar
+* /resources/js/components/UserMenuContent.vue
 
-### Authentication Layout Choices
-/resources/js/layouts/AuthLayout.vue
+### File for Authentication Layout Choices
+
+* /resources/js/layouts/AuthLayout.vue
+
    can choose:
+```sh
       import AuthLayout from '@/layouts/auth/AuthSimpleLayout.vue';
       import AuthLayout from '@/layouts/auth/AuthCardLayout.vue';
       import AuthLayout from '@/layouts/auth/AuthSplitLayout.vue';
+```
 
-### Application Layout Choices
-/resources/js/layouts/AuthLayout.vue
+### File for  Application Layout Choices
+
+* /resources/js/layouts/AuthLayout.vue
+
    can choose:
+```sh
       import AppLayout from '@/layouts/app/AppSidebarLayout.vue';
       import AppLayout from '@/layouts/app/AppHeaderLayout.vue';
+```
 
-### Icons Used
+### Icons Used: lucide-vue-next
     https://lucide.dev/icons/
+```sh
     import {CloudMoonRain,} from 'lucide-vue-next';
+```
 
-resources/js/components/AppSidebar.vue
+* /resources/js/components/AppSidebar.vue
+```sh
     {
         title: 'Complaint',
         href: '/complaint/create',
         icon: CloudMoonRain,
     },
+```
+# Create Folders and Vue Files
 
-resources/js/pages/viewjs/complaint/Layout.vue
+## Folder to Create
+
+* /resources/js/pages/viewjs/complaint/
+
+## Files to Create
+
+* /resources/js/pages/viewjs/complaint/Layout.vue
+
+```sh
 <script setup lang="ts">
 import Heading from '@/components/Heading.vue';
 import { Button } from '@/components/ui/button';
@@ -105,8 +126,11 @@ const currentPath = page.props.ziggy?.location ? new URL(page.props.ziggy.locati
         </div>
     </div>
 </template>
+```
 
-resources/js/pages/viewjs/complaint/create.vue
+* resources/js/pages/viewjs/complaint/create.vue
+
+```sh
 <script setup lang="ts">
 import { Head, Link, useForm, usePage } from '@inertiajs/vue3';
 
@@ -205,8 +229,11 @@ const submit = () => {
         </SettingsLayout>
     </AppLayout>
 </template>
+```
 
-resources/js/pages/viewjs/complaint/edit.vue
+* resources/js/pages/viewjs/complaint/edit.vue
+
+```sh
 <script setup lang="ts">
 
 import { Head, Link, useForm, usePage } from '@inertiajs/vue3';
@@ -323,8 +350,11 @@ const submit = () => {
         </SettingsLayout>
     </AppLayout>
 </template>
+```
 
-resources/js/pages/viewjs/complaint/index.vue
+* resources/js/pages/viewjs/complaint/index.vue
+
+```sh
 <script setup lang="ts">
 
 import {
@@ -500,8 +530,11 @@ const submit = () => {
         </SettingsLayout>
     </AppLayout>
 </template>
+```
 
-resources/js/pages/viewjs/complaint/show.vue
+* resources/js/pages/viewjs/complaint/show.vue
+
+```sh
 <script setup lang="ts">
 import { Head, Link, useForm, usePage } from '@inertiajs/vue3';
 
@@ -614,4 +647,4 @@ const submit = () => {
         </SettingsLayout>
     </AppLayout>
 </template>
-
+```
