@@ -1,6 +1,13 @@
 
 # Front End Sample Code Guide ([Laravel 12](https://laravel.com/docs/12.x/installation))
 
+## Pre Requisite
+
+* [Backend Coding is Completed]((https://github.com/gc120978levelup1/ss_LAMP_Docker/blob/master/README%20file%20Backend%20Guide.md)) 
+* Register and Login to the web app being coded.
+
+------------------------------------------------------------------
+
 ### shadcn components (primary laravel 12 frontend component)
 * https://ui.shadcn.com/docs/components/accordion
 
