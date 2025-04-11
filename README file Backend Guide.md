@@ -12,7 +12,7 @@ php artisan migrate
 
 ```sh
 "serve": "concurrently  \"npm run dev\" \"php artisan serve\"",
-```sh
+```
 
 ## Create Complete Model, Controller, Request, migrations
 Note: model name should be capitalized and singular forn
