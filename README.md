@@ -86,7 +86,7 @@ docker ps -aq | xargs docker stop | xargs docker rm
 * In your project .env file change DB_PORT=33061 to DB_PORT=3306 in order to open production site [WWW_SERVER](http://www.garry.com)
 
 * Using your browser, visit the phpmyadmin address as per specified in the service (docker-compose.yml file)
-ex. [PhpMyAdminServer](http://www.garry.com:8001)
+ex. [PhpMyAdminServer](http://phpmyadmin.garry.com:8001/)
 
 * mysql_dbase_port: 33061
 * mysql_dbase_name: www-garry-com
