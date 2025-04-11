@@ -8,6 +8,7 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 RUN docker-php-ext-install pdo_mysql zip
 # Copy the application code
 COPY . /var/www/html
+COPY .env /var/www/html
 # Set the working directory
 WORKDIR /var/www/html
 # Install composer
