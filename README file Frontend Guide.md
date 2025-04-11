@@ -18,7 +18,7 @@
 
 ```sh
 <link rel="icon" type="image/x-icon" href="/storage/favicon.jpg">
-```sh
+```
 
 ------------------------------------------------------------------
 
