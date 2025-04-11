@@ -42,6 +42,8 @@ Add the following code in Schema::create('complaints', function (Blueprint $tabl
    php artisan make:migration add_description_to_complaints --table="complaints"
 ```
 
+* database/migrations/xxxx_xx_xx_xxxxxx_add_description_to_complaints.php
+
 Add the following code in [return new class extends Migration] function
 ```sh
 /**
