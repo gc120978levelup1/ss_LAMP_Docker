@@ -36,11 +36,35 @@ Add the following code in Schema::create('complaints', function (Blueprint $tabl
             $table->string('complaint');
 ```
 
-* database/migrations/xxxx_xx_xx_xxxxxx_add_description_to_complaints.php
+### To Add New Column to an existing table:
 
-To Add New Column to an existing table:
 ```sh
    php artisan make:migration add_description_to_complaints --table="complaints"
+```
+
+Add the following code in [return new class extends Migration] function
+```sh
+/**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::table('complaints', function (Blueprint $table) {
+            //
+            $table->dropColumn('description')->nullable();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::table('complaints', function (Blueprint $table) {
+            //
+            $table->string('description');
+        });
+    }
 ```
 
 ### Sample Code to insert in a migration file
