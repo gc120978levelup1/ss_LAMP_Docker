@@ -36,6 +36,11 @@ Add the following code in Schema::create('complaints', function (Blueprint $tabl
             $table->string('complaint');
 ```
 
+### Run Migration
+```sh
+./ss migrate
+```
+
 ### To Add New Column to an existing table:
 
 ```sh
@@ -67,6 +72,11 @@ Add the following code in [return new class extends Migration] function
             $table->string('description');
         });
     }
+```
+
+### Run Migration
+```sh
+./ss migrate
 ```
 
 ### Sample Code to insert in a migration file
