@@ -1,41 +1,59 @@
 # Back End Sample Code Guide ([Laravel 12](https://laravel.com/docs/12.x/installation))
 
 ## Initialize your Laravel project
-       * php artisan key:generate
-       * php artisan storage:link
-       * php artisan migrate
 
-### package.json, in scripts
+```sh
+php artisan key:generate
+php artisan storage:link
+php artisan migrate
+```
 
-*   "serve": "concurrently  \"npm run dev\" \"php artisan serve\"",
+### package.json, in <scripts> insert the code below
 
-### Create Complete Model, Controller, Request, migrations
+```sh
+"serve": "concurrently  \"npm run dev\" \"php artisan serve\"",
+```sh
+
+## Create Complete Model, Controller, Request, migrations
 Note: model name should be capitalized and singular forn
 
-   * php artisan make:Model Complaint -a
+```sh
+php artisan make:Model Complaint -a
+```
 
-### Files to be Edited After making a Model
+## Files to be Edited After making a Model
+
+### Migration files
 
 * database/migrations/xxxx_xx_xx_xxxxxx_create_complaints_table.php
 * database/migrations/xxxx_xx_xx_xxxxxx_add_description_to_complaints.php
 
+To Add New Column to an existing table
 ```sh
    php artisan make:migration add_description_to_complaints --table="complaints"
 ```
+
+### Sample Code to insert in a migration file
+
 ```sh
 	$table->foreignId('user_id')->constrained();
 	$table->double('column_name', 15, 8);
 	$table->string('description')->nullable(); 
 	$table->integer('column_name');
 	$table->text('column_name');
-	$table->bigInteger('column_name');
+	$table->bigInteger('column_name')->unique();
 	$table->dropColumn('description')->nullable();
 ```
 
-app/Http/Controllers/ComplaintController.php
-    >>
+### Controller File
+
+* app/Http/Controllers/ComplaintController.php
+
+```sh
     use Inertia\Inertia;
-    >>
+    
+    ......
+
     public function index()
     {
         return Inertia::render('viewjs/complaint/index', [
@@ -81,18 +99,32 @@ app/Http/Controllers/ComplaintController.php
         }
         return redirect()->route('complaint.show', ['complaint' => $complaint]);
     }
+```
+### Request files
 
-app/Http/Requests/StoreComplaintRequest.php
-app/Http/Requests/UpdateComplaintRequest.php
+* app/Http/Requests/StoreComplaintRequest.php
+* app/Http/Requests/UpdateComplaintRequest.php
+
+```sh
     public function authorize(): bool
     {
         return true;
     }
+```
 
-app/Http/Models/Complaint.php
+### Model file
+
+* app/Http/Models/Complaint.php
+
+```sh
     protected $guarded = ['id'];
+```
 
-routes/web.php
+### Route file
+
+* routes/web.php
+
+```sh
   use App\Http\Controllers\ComplaintController;
   Route::middleware('auth')->group(function () {
     //Route::redirect('settings', '/settings/profile');
@@ -103,12 +135,17 @@ routes/web.php
     Route::put('/complaint/{complaint}/update', [ComplaintController::class, 'update'])->name('complaint.update');
     Route::get('/complaint/{complaint}/show', [ComplaintController::class, 'show'])->name('complaint.show');
   });
+```
 
 ## summary
+
 ### Important Migration Commands
-php artisan make:Model Complaint -a
-php artisan migrate
-php artisan migrate:rollback
-php artisan make:migration add_description_to_complaints --table="complaints"
+
+```sh
 php artisan key:generate
 php artisan storage:link
+php artisan migrate
+php artisan make:Model Complaint -a
+php artisan migrate:rollback
+php artisan make:migration add_description_to_complaints --table="complaints"
+```sh
