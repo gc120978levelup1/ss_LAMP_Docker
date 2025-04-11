@@ -191,7 +191,6 @@ Sample Routes Code to Insert
 ```sh
 use App\Http\Controllers\ComplaintController;
 Route::middleware('auth')->group(function () {
-  //Route::redirect('settings', '/settings/profile');
   Route::get ('/complaint', [ComplaintController::class, 'index'])->name('complaint.index');
   Route::get ('/complaint/create', [ComplaintController::class, 'create'])->name('complaint.create');
   Route::post('/complaint/post', [ComplaintController::class, 'store'])->name('complaint.post');
