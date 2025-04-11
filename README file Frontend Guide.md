@@ -4,24 +4,38 @@
 ### shadcn components (primary laravel 12 frontend component)
 * https://ui.shadcn.com/docs/components/accordion
 
+------------------------------------------------------------------
+
 ### File for Editing Main Side Bar Menu App Logo Icon (SVG)
 * /resources/js/components/AppLogoIcon.vue
+
+------------------------------------------------------------------
 
 ### File for Editing Main Side Bar Menu App Title (Upper Left)
 * /resources/js/components/AppLogo.vue
 
+------------------------------------------------------------------
+
 ### File for Editing Main Side Bar Menu "Platform"
 * /resources/js/components/NavMain.vue
+
+------------------------------------------------------------------
 
 ### File for Editing Main Side Bar Menu (below "Platform")*most important
 ### Add More Menu in the Side Bar
 * /resources/js/components/AppSidebar.vue
 
+------------------------------------------------------------------
+
 ### File for User Button Contents in the Main Sidebar
 * /resources/js/components/UserInfo.vue
 
+------------------------------------------------------------------
+
 ### File for User Menu Drop Down inside the Main Sidebar
 * /resources/js/components/UserMenuContent.vue
+
+------------------------------------------------------------------
 
 ### File for Authentication Layout Choices
 
@@ -34,6 +48,8 @@
       import AuthLayout from '@/layouts/auth/AuthSplitLayout.vue';
 ```
 
+------------------------------------------------------------------
+
 ### File for  Application Layout Choices
 
 * /resources/js/layouts/AuthLayout.vue
@@ -44,13 +60,18 @@
       import AppLayout from '@/layouts/app/AppHeaderLayout.vue';
 ```
 
+------------------------------------------------------------------
+
 ### Icons Used: lucide-vue-next
     https://lucide.dev/icons/
 ```sh
     import {CloudMoonRain,} from 'lucide-vue-next';
 ```
 
+------------------------------------------------------------------
+
 * /resources/js/components/AppSidebar.vue
+
 ```sh
     {
         title: 'Complaint',
@@ -58,11 +79,14 @@
         icon: CloudMoonRain,
     },
 ```
+
 # Create Folders and Vue Files
 
 ## Folder to Create
 
 * /resources/js/pages/viewjs/complaint/
+
+------------------------------------------------------------------
 
 ## Files to Create
 
