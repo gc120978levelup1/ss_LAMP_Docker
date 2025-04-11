@@ -64,7 +64,7 @@ cd ..
 ./ss check
 ```
 
-## If there are indication of running containers instances, shut it all down.
+## If there are indication of running containers instances, shut it all down using the command below.
 
 ```sh
 docker ps -aq | xargs docker stop | xargs docker rm
