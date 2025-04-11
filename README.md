@@ -5,8 +5,8 @@ a simple DOCKER Full Stack LAMP server for Laravel Development
 
 [VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
 
-## Pre-requisite (WSL2)
-* Docker + WSL2 + Ubuntu + Git + Composer + Laravel + Nodejs (+ Vue)
+## Pre-requisite before using ss_LAMP_Docker
+* [Docker + WSL2](https://docs.docker.com/get-started/get-docker/) + [Ubuntu](https://documentation.ubuntu.com/wsl/en/latest/howto/install-ubuntu-wsl2/) + [Git](https://git-scm.com/downloads) + [Composer](https://getcomposer.org/download/) + [Laravel](https://laravel.com/docs/12.x/installation) + [Nodejs](https://nodejs.org/en/download) + [Vue3](https://vuejs.org/) + [VSCode](https://code.visualstudio.com/Download)
 * Make sure DOCKER is running when executing the command lines below
 * Make A New Laravel project and wait until its totally done
 
@@ -27,7 +27,8 @@ sudo nano /mnt/c/windows/system32/drivers/etc/hosts
 127.0.0.1 phpmyadmin.garry.com
 ```
 
-### From here on wards, use Git Bash Terminal
+## Open Your LARAVEL Project using [VSCode](https://code.visualstudio.com/)
+### From from VSCode, launch Git Bash Terminal
 ### (use Git Bash Terminal) Download this ss_LAMP_DOCKER folder INSIDE YOUR PROJECT and wait until done downloading (use Git Bash Terminal)
 
 ```sh
