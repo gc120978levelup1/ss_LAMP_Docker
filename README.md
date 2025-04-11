@@ -33,7 +33,7 @@ sudo nano /mnt/c/windows/system32/drivers/etc/hosts
 ```
 
 ## Open Your LARAVEL Project Folder using [VSCode](https://code.visualstudio.com/)
-### From from VSCode, launch Git Bash Terminal
+### From VSCode, launch Git Bash Terminal
 ### (use Git Bash Terminal) Download this ss_LAMP_DOCKER folder INSIDE YOUR PROJECT and wait until done downloading (use Git Bash Terminal)
 
 ```sh
