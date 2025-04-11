@@ -7,8 +7,13 @@ a simple DOCKER Full Stack LAMP server for Laravel Development
 
 ## Pre-requisite before using ss_LAMP_Docker
 * [Docker + WSL2](https://docs.docker.com/get-started/get-docker/) + [Ubuntu](https://documentation.ubuntu.com/wsl/en/latest/howto/install-ubuntu-wsl2/) + [Git](https://git-scm.com/downloads) + [Composer](https://getcomposer.org/download/) + [Laravel](https://laravel.com/docs/12.x/installation) + [Nodejs](https://nodejs.org/en/download) + [Vue3](https://vuejs.org/) + [VSCode](https://code.visualstudio.com/Download)
+* [Setup Docker to work nicely with WSL2.](https://learn.microsoft.com/en-us/windows/wsl/tutorials/wsl-containers)
 * Make sure DOCKER is running when executing the command lines below
-* Make A New Laravel project and wait until its totally done
+
+### In PowerShell, Make A [New Laravel project](https://laravel.com/docs/12.x/installation#creating-an-application) and wait until its totally done
+```sh
+laravel new
+```
 
 ## Set All the Docker Services Names to point to 127.0.0.1 Hostname (use WSL2 terminal)
 
@@ -27,8 +32,8 @@ sudo nano /mnt/c/windows/system32/drivers/etc/hosts
 127.0.0.1 phpmyadmin.garry.com
 ```
 
-## Open Your LARAVEL Project using [VSCode](https://code.visualstudio.com/)
-### From from VSCode, launch Git Bash Terminal
+## Open Your LARAVEL Project Folder using [VSCode](https://code.visualstudio.com/)
+### From VSCode, launch Git Bash Terminal
 ### (use Git Bash Terminal) Download this ss_LAMP_DOCKER folder INSIDE YOUR PROJECT and wait until done downloading (use Git Bash Terminal)
 
 ```sh
@@ -59,6 +64,12 @@ cd ..
 ./ss check
 ```
 
+## If there are indication of running containers instances, shut it all down using the command below.
+
+```sh
+docker ps -aq | xargs docker stop | xargs docker rm
+```
+
 ## Launch Containers in  (Git Bash Terminal) (node + composer)
 
 ```sh
@@ -72,11 +83,10 @@ cd ..
 ```
 
 ### Now Your Project (Production) is ONLINE!!!!
-* Using your browser, visit the www address as per specified in the service (docker-compose.yml file)
-ex. [WWW_SERVER](http://www.garry.com)
+* In your project .env file change DB_PORT=33061 to DB_PORT=3306 in order to open production site [WWW_SERVER](http://www.garry.com)
 
 * Using your browser, visit the phpmyadmin address as per specified in the service (docker-compose.yml file)
-ex. [PhpMyAdminServer](http://phpmyadmin.garry.com:8001)
+ex. [PhpMyAdminServer](http://phpmyadmin.garry.com:8001/)
 
 * mysql_dbase_port: 33061
 * mysql_dbase_name: www-garry-com
@@ -85,12 +95,14 @@ ex. [PhpMyAdminServer](http://phpmyadmin.garry.com:8001)
 * user : root
 * password:
 
-
 ### Run The Development Mode to Edit Things  (Git Bash Terminal)
-
+* In your project .env file change DB_PORT=3306 to DB_PORT=33061
 ```sh
 ./ss dev
 ```
+### Uou can NOW Open Your [Development Site!!!](http://127.0.0.1:8000/)
+
+You can now be able to start coding your application and see the changes on the development site rite away.
 
 ### Shut Down Container in  (Git Bash Terminal)
 
@@ -98,8 +110,7 @@ ex. [PhpMyAdminServer](http://phpmyadmin.garry.com:8001)
 ./ss down
 ```
 
-### Shut Down Container in  (Git Bash Terminal)
-
+### List of ss_LAMP_Docker commands
     =====================================================================
       Usage: ./ss check     - Check the status of the containers
              ./ss merge     - Merge this ss_DOCKER_LAMP to main project

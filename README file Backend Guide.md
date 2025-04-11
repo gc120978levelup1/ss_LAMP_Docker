@@ -26,6 +26,16 @@ php artisan make:Model Complaint -a
 ### [Migration files](https://laravel.com/docs/12.x/migrations)
 
 * database/migrations/xxxx_xx_xx_xxxxxx_create_complaints_table.php
+
+Add the following code in Schema::create('complaints', function (Blueprint $table)) function
+```sh
+            $table->string('accountnumber')->unique();
+            $table->string('name');
+            $table->string('address');
+            $table->string('picture')->nullable();
+            $table->string('complaint');
+```
+
 * database/migrations/xxxx_xx_xx_xxxxxx_add_description_to_complaints.php
 
 To Add New Column to an existing table:
