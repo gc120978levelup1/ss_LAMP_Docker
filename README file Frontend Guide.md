@@ -44,12 +44,6 @@ this site will convert jpg to svg: https://www.freeconvert.com/
 
 ------------------------------------------------------------------
 
-### File for Editing Main Side Bar Menu (below "Platform")*most important
-### Add More Menu in the Side Bar
-* /resources/js/components/AppSidebar.vue
-
-------------------------------------------------------------------
-
 ### File for User Button Contents in the Main Sidebar
 * /resources/js/components/UserInfo.vue
 
@@ -95,9 +89,12 @@ https://lucide.dev/icons/
 
 ------------------------------------------------------------------
 
+### File for Editing Main Side Bar Menu (below "Platform")*most important
+### Add More Menu in the Side Bar
+
 * /resources/js/components/AppSidebar.vue
 
-you can add more items
+you can add more menu items
 
 ```sh
     {
@@ -116,6 +113,10 @@ you can add more items
 ------------------------------------------------------------------
 
 ## Files to Create
+
+### Layout
+
+this file acts like a sub menu of the side bar main menu
 
 * /resources/js/pages/viewjs/complaint/Layout.vue
 
@@ -179,12 +180,19 @@ const currentPath = page.props.ziggy?.location ? new URL(page.props.ziggy.locati
 </template>
 ```
 
+---------------------------------------------------------
+
+### Create View
+
+this file acts to insert new data to database
+
 * resources/js/pages/viewjs/complaint/create.vue
 
 ```sh
-<script setup lang="ts">
-import { Head, Link, useForm, usePage } from '@inertiajs/vue3';
 
+<script setup lang="ts">
+import { ref, } from 'vue';
+import { Head, Link, useForm, usePage, } from '@inertiajs/vue3';
 import DeleteUser from '@/components/DeleteUser.vue';
 import HeadingSmall from '@/components/HeadingSmall.vue';
 import InputError from '@/components/InputError.vue';
@@ -192,7 +200,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import AppLayout from '@/layouts/AppLayout.vue';
-import SettingsLayout from '@/pages/viewjs/complaint/xLayout.vue';
+import SettingsLayout from './Layout.vue';
 import { type BreadcrumbItem, type SharedData, type User } from '@/types';
 
 interface Props {
@@ -212,21 +220,32 @@ const page = usePage<SharedData>();
 const user = page.props.auth.user as User;
 
 const form = useForm({
-    'accountnumber':"",
-    'name'         :"",
-    'address'      :"",
-    'description'  :"",
+    accountnumber:"",
+    name         :"",
+    address      :"",
+    complaint    :"",
+    description  :"",
+    picture      :"xxxxx",
+    image_file   :null,
 });
 
 // Register the form with into local storage
 //import mem from '@/extra/gboi_memory';
 //mem.register('complaint', form);
 
+const imageURL = ref();
+const onPictureChange = (event) => {
+    const files = event.target.files;
+    imageURL.value = URL.createObjectURL(files[0]); 
+    form.image_file = files[0];
+};
+
 const submit = () => {
     form.post(route('complaint.post'), {
         preserveScroll: true,
     });
 };
+
 </script>
 
 <template>
@@ -259,11 +278,29 @@ const submit = () => {
                     </div>
 
                     <div class="grid gap-2">
+                        <Label for="complaint">Complaint</Label>
+                        <Input id="complaint" class="mt-1 block w-full" v-model="form.complaint" required autocomplete="complaint"
+                            placeholder="complaint" />
+                        <InputError class="mt-2" :message="form.errors.complaint" />
+                    </div>
+
+                    <div class="grid gap-2">
                         <Label for="description">Description</Label>
                         <Input id="description" class="mt-1 block w-full" v-model="form.description" required autocomplete="description"
                             placeholder="Description" />
                         <InputError class="mt-2" :message="form.errors.description" />
                     </div>
+
+                    <div v-if="imageURL" class="grid gap-2">
+                        <img :src="imageURL" alt="" srcset="" class="border-2 rounded-lg">
+                    </div>  
+
+                    <div class="grid gap-2">
+                        <Label for="picture">Picture</Label>
+                        <Input type="file" accept="image/*" @change="onPictureChange" id="picture" class="mt-1 block w-full"  required autocomplete="picture"
+                            placeholder="picture" />
+                        <InputError class="mt-2" :message="form.errors.picture" />
+                    </div>                 
 
                     <div class="flex items-center gap-4">
                         <div class="ml-auto my-auto">
@@ -280,11 +317,17 @@ const submit = () => {
         </SettingsLayout>
     </AppLayout>
 </template>
+
 ```
+
+### Edit View
+
+this file acts to edit 1 data row from database
 
 * resources/js/pages/viewjs/complaint/edit.vue
 
 ```sh
+
 <script setup lang="ts">
 
 import { Head, Link, useForm, usePage } from '@inertiajs/vue3';
@@ -295,7 +338,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import AppLayout from '@/layouts/AppLayout.vue';
-import SettingsLayout from '@/pages/viewjs/complaint/xLayout.vue';
+import SettingsLayout from './Layout.vue';
 import { type BreadcrumbItem, type SharedData, type User } from '@/types';
 import { ref } from 'vue';
 
@@ -316,25 +359,28 @@ const page = usePage<SharedData>();
 const user = page.props.auth.user as User;
 
 const form = useForm({
-    id            :props.complaint.id,
-    accountnumber :props.complaint.accountnumber, 
-    name          :props.complaint.name,
-    address       :props.complaint.address,
-    description   :props.complaint.description,
-    image         :props.complaint.image,
-    image_file    :null,
+    id: props.complaint.id,
+    accountnumber: props.complaint.accountnumber,
+    name: props.complaint.name,
+    address: props.complaint.address,
+    complaint: props.complaint.complaint,
+    description: props.complaint.description,
+    picture: props.complaint.picture,
+    image_file: null,
+    created_at: props.complaint.created_at,
+    updated_at: props.complaint.updated_at,
 });
 
-const img_url = ref();
+const img_url = ref(form.picture);
 const encodeImageFileAsURL = (event) => {
     const files = event.target.files;
-    img_url.value = URL.createObjectURL(files[0]); 
+    img_url.value = URL.createObjectURL(files[0]);
     form.image_file = files[0];
 }
 
 const submit = () => {
     console.log(form);
-    form.put(route('complaint.update', { id: form.id }), {
+    form.post(route('complaint.update', { id: form.id }), {
         preserveScroll: true,
     });
 };
@@ -350,8 +396,8 @@ const submit = () => {
                 <form @submit.prevent="submit" class="space-y-6">
                     <div class="grid gap-2">
                         <Label for="accountnumber">Account Number</Label>
-                        <Input id="accountnumber" class="mt-1 block w-full" v-model="form.accountnumber" required autocomplete="accountnumber"
-                            placeholder="accountnumber" />
+                        <Input id="accountnumber" class="mt-1 block w-full" v-model="form.accountnumber" required
+                            autocomplete="accountnumber" placeholder="accountnumber" />
                         <InputError class="mt-2" :message="form.errors.accountnumber" />
                     </div>
 
@@ -364,26 +410,33 @@ const submit = () => {
 
                     <div class="grid gap-2">
                         <Label for="address">Address</Label>
-                        <Input id="name" class="mt-1 block w-full" v-model="form.address" required autocomplete="address"
-                            placeholder="Address" />
+                        <Input id="name" class="mt-1 block w-full" v-model="form.address" required
+                            autocomplete="address" placeholder="Address" />
                         <InputError class="mt-2" :message="form.errors.address" />
                     </div>
 
                     <div class="grid gap-2">
+                        <Label for="complaint">Complaint</Label>
+                        <Input id="complaint" class="mt-1 block w-full" v-model="form.complaint" required
+                            autocomplete="complaint" placeholder="complaint" />
+                        <InputError class="mt-2" :message="form.errors.complaint" />
+                    </div>
+
+                    <div class="grid gap-2">
                         <Label for="description">Description</Label>
-                        <Input id="description" class="mt-1 block w-full" v-model="form.description" required autocomplete="description"
-                            placeholder="Description" />
+                        <Input id="description" class="mt-1 block w-full" v-model="form.description" required
+                            autocomplete="description" placeholder="Description" />
                         <InputError class="mt-2" :message="form.errors.description" />
                     </div>
 
                     <div class="grid gap-2">
                         <Label for="image">Picture</Label>
-                        <Input type="file" accept="image/*" id="image" class="mt-1 block w-full" @change="encodeImageFileAsURL($event)" />
+                        <div v-if="img_url" class="grid gap-2">
+                            <img :src="img_url" alt="" srcset="" class="border-2 rounded-lg">
+                        </div>
+                        <Input type="file" accept="image/*" id="image" class="mt-1 block w-full"
+                            @change="encodeImageFileAsURL($event)" />
                         <InputError class="mt-2" :message="form.errors.image_file" />
-                    </div>
-
-                    <div class="grid gap-2">
-                        <img :src="img_url" alt="" srcset="" class="border-2 rounded-lg">
                     </div>
 
                     <div class="flex items-center gap-4">
@@ -401,11 +454,17 @@ const submit = () => {
         </SettingsLayout>
     </AppLayout>
 </template>
+
 ```
+
+### Index View
+
+this file acts as db grid to show all data from database
 
 * resources/js/pages/viewjs/complaint/index.vue
 
 ```sh
+
 <script setup lang="ts">
 
 import {
@@ -425,7 +484,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import AppLayout from '@/layouts/AppLayout.vue';
-import SettingsLayout from '@/pages/viewjs/complaint/xLayout.vue';
+import SettingsLayout from './Layout.vue';
 import { type BreadcrumbItem, type SharedData, type User } from '@/types';
 
 interface Props {
@@ -581,11 +640,18 @@ const submit = () => {
         </SettingsLayout>
     </AppLayout>
 </template>
+
 ```
+
+
+### Show View
+
+this file acts to show 1 row data from database
 
 * resources/js/pages/viewjs/complaint/show.vue
 
 ```sh
+
 <script setup lang="ts">
 import { Head, Link, useForm, usePage } from '@inertiajs/vue3';
 
@@ -596,7 +662,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import AppLayout from '@/layouts/AppLayout.vue';
-import SettingsLayout from '@/pages/viewjs/complaint/xLayout.vue';
+import SettingsLayout from './Layout.vue';
 import { type BreadcrumbItem, type SharedData, type User } from '@/types';
 
 interface Props {
@@ -620,7 +686,9 @@ const form = useForm({
     accountnumber :props.complaint.accountnumber, 
     name          :props.complaint.name,
     address       :props.complaint.address,
+    complaint     :props.complaint.complaint,
     description   :props.complaint.description,
+    picture       :props.complaint.picture,
     created_at    :props.complaint.created_at,
     updated_at    :props.complaint.updated_at,
 });
@@ -663,11 +731,22 @@ const submit = () => {
                     </div>
 
                     <div class="grid gap-2">
+                        <Label for="complaint">Complaint</Label>
+                        <Input id="complaint" class="mt-1 block w-full" v-model="form.complaint" required autocomplete="complaint"
+                            placeholder="complaint" />
+                        <InputError class="mt-2" :message="form.errors.complaint" />
+                    </div>
+
+                    <div class="grid gap-2">
                         <Label for="description">Description</Label>
                         <Input id="description" class="mt-1 block w-full" v-model="form.description" required autocomplete="description"
                             placeholder="Description" />
                         <InputError class="mt-2" :message="form.errors.description" />
                     </div>
+
+                    <div v-if="form.picture" class="grid gap-2">
+                        <img :src="form.picture" alt="" srcset="" class="border-2 rounded-lg">
+                    </div> 
 
                     <div class="grid gap-2">
                         <Label for="created_at">Created At</Label>
@@ -698,4 +777,7 @@ const submit = () => {
         </SettingsLayout>
     </AppLayout>
 </template>
+
 ```
+
+# All Done ... 

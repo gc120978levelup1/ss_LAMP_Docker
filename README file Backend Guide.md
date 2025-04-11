@@ -27,7 +27,7 @@ php artisan make:Model Complaint -a
 
 * database/migrations/xxxx_xx_xx_xxxxxx_create_complaints_table.php
 
-Add the following code in Schema::create('complaints', function (Blueprint $table)) function
+Add the following code/columns in Schema::create('complaints', function (Blueprint $table)) function
 ```sh
             $table->string('accountnumber')->unique();
             $table->string('name');
@@ -49,7 +49,7 @@ Add the following code in Schema::create('complaints', function (Blueprint $tabl
 
 * database/migrations/xxxx_xx_xx_xxxxxx_add_description_to_complaints.php
 
-Add the following code in [return new class extends Migration] function
+Replace the following code in [return new class extends Migration] function
 ```sh
     /**
      * Run the migrations.
@@ -79,7 +79,7 @@ Add the following code in [return new class extends Migration] function
 ./ss migrate
 ```
 
-### Sample Code to insert in a migration file
+### Sample data to insert in a migration file
 
 ```sh
 	$table->foreignId('user_id')->constrained();
@@ -101,6 +101,8 @@ Note: The sample code is for Laravel + Inertia + Vue
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Inertia\Inertia;
 use App\Models\Complaint;
 use App\Http\Requests\StoreComplaintRequest;
@@ -120,14 +122,19 @@ class ComplaintController extends Controller
     }
     public function store(StoreComplaintRequest $request)
     {
-        $image_path = '';
-        if (!$request->hasFile('image_file')) {
-            $image_path = '/storage/' . $request->file('image_file')->store('image', 'public');
-            $request->merge(['image' => $image_path]);
-            $complaint = Complaint::create($request->all());
+        // saving and extracting uploaed picture
+        if ($request->hasFile('image_file')) {
+            $request->merge([
+                'picture' => '/storage/' . $request->file('image_file')->store('pictures', 'public'),
+            ]);
         }
-        return redirect()->route('complaint.show', ['complaint' => $complaint]);
+        $complaint = Complaint::create($request->all());
+        return redirect()->route(
+            'complaint.show', [
+                'complaint' => $complaint
+        ]);
     }
+
     public function show(Complaint $complaint)
     {
         return Inertia::render(
@@ -147,17 +154,23 @@ class ComplaintController extends Controller
     public function update(UpdateComplaintRequest $request, Complaint $complaint)
     {
         // if update includes saving images, it should ne called by post not put or patch
-        $image_path = '';
-        if (!$request->hasFile('image_file')) {
-            $image_path = '/storage/' . $request->file('image_file')->store('image', 'public');
-            $request->merge(['image' => $image_path]);
-            $complaint->update($request->all());
+        // saving and extracting uploaed picture
+        if ($request->hasFile('image_file')) {
+            if ($request['picture'] != null){
+                $originalString = $request['picture'];
+                $searchString = '/storage/';
+                $replaceString = '';
+                $newString = Str::replace($searchString, $replaceString, $originalString);
+                Storage::delete($newString);
+            }
+            $request->merge([
+                'picture' => '/storage/' . $request->file('image_file')->store('pictures', 'public'),
+            ]);
         }
         $complaint->update($request->all());
         return redirect()->route('complaint.show', ['complaint' => $complaint]);
     }
 }
-
 ```
 
 ### Request files
@@ -165,7 +178,7 @@ class ComplaintController extends Controller
 * app/Http/Requests/StoreComplaintRequest.php
 * app/Http/Requests/UpdateComplaintRequest.php
 
-Note: Add this code inside the Request class to ensure proper read/write access
+Note: Replace this code inside the Request classes to ensure proper read/write access
 ```sh
     public function authorize(): bool
     {
