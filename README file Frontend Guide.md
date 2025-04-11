@@ -97,6 +97,8 @@ https://lucide.dev/icons/
 
 * /resources/js/components/AppSidebar.vue
 
+you can add more items
+
 ```sh
     {
         title: 'Complaint',
