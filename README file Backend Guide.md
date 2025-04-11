@@ -182,7 +182,7 @@ Note: Add this code inside the model class to ensure proper read/write access
     protected $guarded = ['id'];
 ```
 
-### Route file
+### [Route file](https://laravel.com/docs/12.x/routing)
 
 * routes/web.php
 
