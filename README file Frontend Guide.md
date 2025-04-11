@@ -13,7 +13,19 @@
 
 ------------------------------------------------------------------
 
+### Update Icon
+* /resources/views/app.blade.php
+
+```sh
+<link rel="icon" type="image/x-icon" href="/storage/favicon.jpg">
+```sh
+
+------------------------------------------------------------------
+
 ### File for Editing Main Side Bar Menu App Logo Icon (SVG)
+
+this site will convert jpg to svg: https://www.freeconvert.com/
+
 * /resources/js/components/AppLogoIcon.vue
 
 ------------------------------------------------------------------
