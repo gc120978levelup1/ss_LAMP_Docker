@@ -1,15 +1,17 @@
-# Back End Sample Code Guide (Laravel 12)
+# Back End Sample Code Guide ([Laravel 12](https://laravel.com/docs/12.x/installation))
 
 ## Initialize your Laravel project
        * php artisan key:generate
        * php artisan storage:link
        * php artisan migrate
 
-package.json, in scripts
+### package.json, in scripts
+
        * "serve": "concurrently  \"npm run dev\" \"php artisan serve\"",
 
-## Create Complete Model, Controller, Request, migrations
-Note: model name should be capitalized and singular form
+### Create Complete Model, Controller, Request, migrations
+Note: model name should be capitalized and singular forn
+
    * php artisan make:Model Complaint -a
 
 ### Files to be Edited After making a Model

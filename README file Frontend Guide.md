@@ -1,5 +1,5 @@
 
-# Front End Sample Code Guide (Laravel 12 + vue3 + shadcn)
+# Front End Sample Code Guide ([Laravel 12](https://laravel.com/docs/12.x/installation))
 
 ### shadcn components
 https://ui.shadcn.com/docs/components/accordion
