@@ -8,6 +8,12 @@ php artisan storage:link
 php artisan migrate
 ```
 
+### Install AWS S3 Buket driver, where you can upload files
+
+```sh
+composer require league/flysystem-aws-s3-v3 "^3.0" --with-all-dependencies
+```
+
 ### package.json, in <scripts> insert the code below
 
 ```sh
