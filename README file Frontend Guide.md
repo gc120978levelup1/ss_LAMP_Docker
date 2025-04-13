@@ -99,7 +99,7 @@ you can add more menu items
 ```sh
     {
         title: 'Complaint',
-        href: '/complaint/create',
+        href: '/complaint,
         icon: CloudMoonRain,
     },
 ```
@@ -464,7 +464,6 @@ this file acts as db grid to show all data from database
 * resources/js/pages/viewjs/complaint/index.vue
 
 ```sh
-
 <script setup lang="ts">
 
 import {
@@ -489,9 +488,10 @@ import { type BreadcrumbItem, type SharedData, type User } from '@/types';
 
 interface Props {
     complaints: { type: Array, },
+    accountnumber : string,
 }
 
-defineProps<Props>();
+const props = defineProps<Props>();
 
 const headTitle = "Complaint Master List";
 const description = "Master lisr of customer complaint.";
@@ -504,14 +504,11 @@ const page = usePage<SharedData>();
 const user = page.props.auth.user as User;
 
 const form = useForm({
-    'accountnumber': "",
-    'name': "",
-    'address': "",
-    'description': "",
+    'accountnumber': props.accountnumber,
 });
 
 const submit = () => {
-    form.post(route('complaint.post'), {
+    form.get(route('complaint.index'), {
         preserveScroll: true,
     });
 };
@@ -535,7 +532,9 @@ const submit = () => {
 
                     <div class="flex items-center gap-4">
                         <div class="ml-auto my-auto">
-                            <Button :disabled="form.processing">Search</Button>
+                            <Button :disabled="form.processing">
+                                Search
+                            </Button>
                             <Transition enter-active-class="transition ease-in-out" enter-from-class="opacity-0"
                                 leave-active-class="transition ease-in-out" leave-to-class="opacity-0">
                                 <p v-show="form.recentlySuccessful" class="text-sm text-neutral-600">Saved.</p>
@@ -572,23 +571,22 @@ const submit = () => {
                             <tbody>
                                 <tr v-for="(complaint, index) in complaints" :key="index"
                                     class="border-b border-neutral-200 dark:border-white/10">
-                                    <td class="whitespace-nowrap px-6 py-3">
-
+                                    <td class="flex whitespace-nowrap px-6 py-3">
                                         <DropdownMenu>
                                             <DropdownMenuTrigger>
-                                                <div class="flex items-center space-x-2 border border-neutral-200 dark:border-white/10 rounded-full p-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700">
+                                                <div
+                                                    class="flex items-center space-x-2 border border-neutral-200 dark:border-white/10 rounded-full p-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700">
                                                     >>
                                                 </div>
-
                                             </DropdownMenuTrigger>
                                             <DropdownMenuContent>
                                                 <div
-                                                    class="flex flex-col p-2 space-y-2 border-b border-neutral-200 dark:border-white/10">
+                                                    class="flex p-2 space-y-2 border-b border-neutral-200 dark:border-white/10">
                                                     <Link :href="route(
                                                         'complaint.show',
                                                         [complaint.id]
                                                     )
-                                                        " class="p-2 px-5 rounded my-auto text-white bg-green-600">
+                                                        " class="p-2 px-5 rounded my-auto text-white bg-green-600 m-2">
                                                     View
                                                     </Link>
 
@@ -596,11 +594,11 @@ const submit = () => {
                                                         'complaint.edit',
                                                         { id: complaint.id }
                                                     )
-                                                        " class="p-2 px-6 rounded my-auto text-white bg-blue-500">
+                                                        " class="p-2 px-6 rounded my-auto text-white bg-blue-500 m-2">
                                                     Edit
                                                     </Link>
 
-                                                    <DangerButton class="p-2 rounded my-auto text-white bg-red-500"
+                                                    <DangerButton class="p-2 rounded my-auto text-white bg-red-500 m-2"
                                                         @click="
                                                             deleteEvent(
                                                                 complaint.id
@@ -612,7 +610,9 @@ const submit = () => {
 
                                             </DropdownMenuContent>
                                         </DropdownMenu>
-
+                                        <div v-if="complaint.picture" class="grid gap-2 w-[50px]">
+                                            <img :src="complaint.picture" alt="" srcset="" class="border-2 rounded-lg">
+                                        </div>
                                     </td>
                                     <td class="whitespace-nowrap px-6 py-4">
                                         {{ complaint.id }}
@@ -640,6 +640,7 @@ const submit = () => {
         </SettingsLayout>
     </AppLayout>
 </template>
+
 
 ```
 

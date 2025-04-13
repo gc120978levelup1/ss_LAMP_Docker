@@ -43,7 +43,7 @@ services:
     ports:
       - 8001:80
     environment:
-      - PMA_HOST=database.garry.com
+      - PMA_HOST='${DB_DATABASE}'
       - PMA_PORT=3306
     networks:
       - lamp-docker-network

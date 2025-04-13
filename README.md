@@ -100,7 +100,7 @@ ex. [PhpMyAdminServer](http://phpmyadmin.garry.com:8001/)
 ```sh
 ./ss dev
 ```
-### Uou can NOW Open Your [Development Site!!!](http://127.0.0.1:8000/)
+### You can NOW Open Your [Development Site!!!](http://127.0.0.1:8000/)
 
 You can now be able to start coding your application and see the changes on the development site rite away.
 
