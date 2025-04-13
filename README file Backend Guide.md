@@ -23,7 +23,6 @@ Note: The value of AWS_URL found in .env file can be obtained by buying buckets 
 example for Cloudflare R2:
 ```sh
 <?php
-<?php
 return [
     'LOCAL_URL' => '/storage/',
     
