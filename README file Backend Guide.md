@@ -11,6 +11,7 @@
 ```sh
 composer install
 npm install
+npm install leaflet
 npm install -D sass-loader sass
 npm i @zxing/browser
 npm install --save qrcode
