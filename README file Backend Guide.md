@@ -12,6 +12,8 @@
 composer install
 npm install
 npm install -D sass-loader sass
+npm i @zxing/browser
+npm install --save qrcode
 npx shadcn-vue@latest add sonner
 composer require league/flysystem-aws-s3-v3 "^3.0" --with-all-dependencies
 npm run build
