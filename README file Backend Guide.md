@@ -9,6 +9,8 @@
 ### Initialize your Laravel project
 
 ```sh
+npm install -D sass-loader sass
+npx shadcn-vue@latest add sonner
 composer require league/flysystem-aws-s3-v3 "^3.0" --with-all-dependencies
 php artisan key:generate
 php artisan storage:link
