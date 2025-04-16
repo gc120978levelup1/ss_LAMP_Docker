@@ -122,7 +122,7 @@ Replace the following code in [return new class extends Migration] function
     public function down(): void
     {
         Schema::table('complaints', function (Blueprint $table) {
-            $table->dropColumn('description')->nullable();
+            $table->dropColumn('description');
         });
     }
 ```
