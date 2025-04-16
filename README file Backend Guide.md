@@ -498,10 +498,10 @@ class AdminRights
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(Auth::user()->role == "admin"){
-            return $next($request); // if role is admin
+        if(Auth::user() && {Auth::user()->role == "admin")){
+            return $next($request); // if role is admin go on normally
         }else{
-            abort(401); // if role is not admin make an error
+            abort(401); // if role is not admin make an error UnAuthorized Access
         }
     }
 }
