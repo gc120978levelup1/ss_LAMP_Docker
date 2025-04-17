@@ -89,6 +89,7 @@ $table->string('name');
 $table->string('address');
 $table->string('picture')->nullable();
 $table->string('complaint');
+$table->longText('description'); // can store up to 4GB of text data
 ```
 
 ### Run Migration
