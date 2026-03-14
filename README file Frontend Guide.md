@@ -15,13 +15,13 @@
 
 ### Update Icon
 
-Note: put your favicon.jpg in /storage/app/public folder
+Note: put your favicon.jpg in /public folder
 
 * /resources/views/app.blade.php
 
 Insert inside the header below @inertiaHead
 ```sh
-<link rel="icon" type="image/x-icon" href="/storage/favicon.jpg">
+<link rel="icon" type="image/x-icon" href="favicon.jpg">
 ```
 
 ------------------------------------------------------------------

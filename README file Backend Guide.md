@@ -9,15 +9,7 @@
 ### Initialize your Laravel project
 
 ```sh
-composer install
-npm install
-npm install leaflet
-npm install -D sass-loader sass
-npm i @zxing/browser
-npm install --save qrcode
-npx shadcn-vue@latest add sonner
 composer require league/flysystem-aws-s3-v3 "^3.0" --with-all-dependencies
-npm run build
 php artisan key:generate
 php artisan storage:link
 php artisan migrate
@@ -89,7 +81,6 @@ $table->string('name');
 $table->string('address');
 $table->string('picture')->nullable();
 $table->string('complaint');
-$table->longText('description'); // can store up to 4GB of text data
 ```
 
 ### Run Migration
@@ -123,43 +114,9 @@ Replace the following code in [return new class extends Migration] function
     public function down(): void
     {
         Schema::table('complaints', function (Blueprint $table) {
-            $table->dropColumn('description');
+            $table->dropColumn('description')->nullable();
         });
     }
-```
-
-### Run New make:migration
-
-```sh
-php artisan make:migration add_role_to_users_table --table="users"
-```
-
-* database/migrations/xxxx_xx_xx_xxxxxx_add_role_to_users_table.php
-
-Replace the following code in [return new class extends Migration] function
-```sh
-return new class extends Migration
-{
-    /**
-     * Run the migrations.
-     */
-    public function up(): void
-    {
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('role')->default("guest");
-        });
-    }
-
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
-    {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('role');
-        });
-    }
-};
 ```
 
 ### Run Migration
@@ -347,14 +304,9 @@ class ComplaintController extends Controller
     {
          // saving and extracting uploaed picture
          if ($request->hasFile('image_file')) {
-            //$request->merge([
-            //    // local file upload, VPS
-            //    'picture' => config('alphaenvironment.LOCAL_URL') . $request->file('image_file')->store(config('alphaenvironment.SUB_FOLDER1'), 'public'),
-            //]);
-
             $request->merge([
                 // remote file upload
-                'picture' =>  config('alphaenvironment.AWS_URL1') . Storage::disk(config('alphaenvironment.BUCKET_DISK3'))->put(config('alphaenvironment.SUB_FOLDER1'), $request->file('image_file')),
+                'picture' =>  config('alphaenvironment.AWS_URL1') . Storage::disk(config('alphaenvironment.BUCKET_DISK3'))->put(config('alphaenvironment.SUB_FLDR_IMAGES'), $request->file('image_file')),
             ]);
         }
         $complaint = Complaint::create($request->all());
@@ -398,7 +350,7 @@ class ComplaintController extends Controller
         if ($request->hasFile('image_file')) {
             $request->merge([
                 // remote file upload
-                'picture' =>  config('alphaenvironment.AWS_URL1') . Storage::disk(config('alphaenvironment.BUCKET_DISK3'))->put(config('alphaenvironment.SUB_FOLDER1'), $request->file('image_file')),
+                'picture' =>  config('alphaenvironment.AWS_URL1') . Storage::disk(config('alphaenvironment.BUCKET_DISK3'))->put(config('alphaenvironment.SUB_FLDR_IMAGES'), $request->file('image_file')),
             ]);
         }
         $complaint->update($request->all());
@@ -471,59 +423,4 @@ php artisan make:migration add_description_to_complaints --table="complaints"
 
 ## [MiddleWare](https://laravel.com/docs/12.x/middleware)
 
-Middleware filters the access of each route according to the logic set in the middleware handle
-
-### Example to make AdminRights mw,
-
-* Invoke: php artisan make:middleware <NameOfMiddleWare>
-
-```sh
-php artisan make:middleware AdminRights
-```
-
-* goto to the newly created file and modify app\Http\Middleware\AdminRights.php
-
-```sh
-<?php
-namespace App\Http\Middleware;
-use Closure;
-use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Illuminate\Support\Facades\Auth;
-class AdminRights
-{
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
-     */
-    public function handle(Request $request, Closure $next): Response
-    {
-        if(Auth::user() && {Auth::user()->role == "admin")){
-            return $next($request); // if role is admin go on normally
-        }else{
-            abort(401); // if role is not admin make an error UnAuthorized Access
-        }
-    }
-}
-```
-
-* goto bootstrap\app.php and inside ->withMiddleware(function (Middleware $middleware) function, insert the code below
-
-```sh
-        $middleware->alias([
-            'admin' => App\Http\Middleware\AdminRights::class,
-        ]);
-```
-
-* finally goto routes\web.php and modify some rouetes,
-  add ->middleware('admin') to any route selected,
-  
-ex.
-```sh
-  Route::get ('/complaint', [ComplaintController::class, 'index'])->middleware('admin')->name('complaint.index');
-```
-
-* So for the above route, it can ne accessed only if the user has admin role.
-  
 #  [Guide For FrontEnd Coding](https://github.com/gc120978levelup1/ss_LAMP_Docker/blob/master/README%20file%20Frontend%20Guide.md)
