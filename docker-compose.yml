@@ -4,7 +4,7 @@ networks:
     driver: bridge
 services:
   database.garry.com:
-    build: 
+    build:
       context: ./context/mysql
     container_name: 'database.garry.com'
     restart: 'always'
@@ -23,7 +23,7 @@ services:
       - lamp-docker-network
 
   www.garry.com:
-    build: 
+    build:
       context: ./context/php-apache
     container_name: 'www.garry.com'
     restart: 'always'
@@ -36,14 +36,14 @@ services:
       - lamp-docker-network
 
   phpmyadmin.garry.com:
-    build: 
+    build:
       context: ./context/phpmyadmin
-    container_name: 'www-phpmyadmin-server'
+    container_name: 'phpmyadmin.garry.com'
     restart: 'always'
     ports:
       - 8001:80
     environment:
-      - PMA_HOST='${DB_DATABASE}'
+      - PMA_HOST=${DB_HOST}
       - PMA_PORT=3306
     networks:
       - lamp-docker-network
