@@ -38,7 +38,7 @@ services:
   phpmyadmin.garry.com:
     build: 
       context: ./context/phpmyadmin
-    container_name: 'www.phpmyadmin.server'
+    container_name: 'phpmyadmin.garry.com'
     restart: 'always'
     ports:
       - 8001:80
