@@ -1,0 +1,49 @@
+
+networks:
+  lamp-docker-network:
+    driver: bridge
+services:
+  database.garry.com:
+    build: 
+      context: ./context/mysql
+    container_name: 'database.garry.com'
+    restart: 'always'
+    environment:
+      MYSQL_ROOT_PASSWORD: ''
+      MYSQL_ROOT_HOST: '%'
+      MYSQL_DATABASE: '${DB_DATABASE}'
+      MYSQL_USER: '${DB_USERNAME}'
+      MYSQL_PASSWORD: '${DB_PASSWORD}'
+      MYSQL_ALLOW_EMPTY_PASSWORD: 1
+    volumes:
+      - "./database_folder:/docker-entrypoint-initdb.d"
+    ports:
+      - '${DB_PORT}:3306'
+    networks:
+      - lamp-docker-network
+
+  www.garry.com:
+    build: 
+      context: ./context/php-apache
+    container_name: 'www.garry.com'
+    restart: 'always'
+    volumes:
+      - '.:/var/www/html'
+    ports:
+      - 80:80
+      - 443:443
+    networks:
+      - lamp-docker-network
+
+  phpmyadmin.garry.com:
+    build: 
+      context: ./context/phpmyadmin
+    container_name: 'phpmyadmin.garry.com'
+    restart: 'always'
+    ports:
+      - 8001:80
+    environment:
+      - PMA_HOST=${DB_HOST}
+      - PMA_PORT=3306
+    networks:
+      - lamp-docker-network
