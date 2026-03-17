@@ -94,14 +94,83 @@ https://lucide.dev/icons/
 
 * /resources/js/components/AppSidebar.vue
 
-you can add more menu items
+copy and replace the code below ...
 
 ```sh
+
+<script setup lang="ts">
+import { Link } from '@inertiajs/vue3';
+import { BookOpen, FolderGit2, LayoutGrid, Hammer } from 'lucide-vue-next';
+import AppLogo from '@/components/AppLogo.vue';
+import NavFooter from '@/components/NavFooter.vue';
+import NavMain from '@/components/NavMain.vue';
+import NavUser from '@/components/NavUser.vue';
+import {
+    Sidebar,
+    SidebarContent,
+    SidebarFooter,
+    SidebarHeader,
+    SidebarMenu,
+    SidebarMenuButton,
+    SidebarMenuItem,
+} from '@/components/ui/sidebar';
+import { dashboard } from '@/routes';
+import { index as index_complaint } from '@/routes/complaint';
+import type { NavItem } from '@/types';
+
+const mainNavItems: NavItem[] = [
+    {
+        title: 'Dashboard',
+        href: dashboard(),
+        icon: LayoutGrid,
+    },
     {
         title: 'Complaint',
-        href: '/complaint,
-        icon: CloudMoonRain,
+        href: index_complaint(),
+        icon: Hammer,
     },
+];
+
+const footerNavItems: NavItem[] = [
+    {
+        title: 'Repository',
+        href: 'https://github.com/laravel/vue-starter-kit',
+        icon: FolderGit2,
+    },
+    {
+        title: 'Documentation',
+        href: 'https://laravel.com/docs/starter-kits#vue',
+        icon: BookOpen,
+    },
+];
+</script>
+
+<template>
+    <Sidebar collapsible="icon" variant="inset">
+        <SidebarHeader>
+            <SidebarMenu>
+                <SidebarMenuItem>
+                    <SidebarMenuButton size="lg" as-child>
+                        <Link :href="dashboard()">
+                            <AppLogo />
+                        </Link>
+                    </SidebarMenuButton>
+                </SidebarMenuItem>
+            </SidebarMenu>
+        </SidebarHeader>
+
+        <SidebarContent>
+            <NavMain :items="mainNavItems" />
+        </SidebarContent>
+
+        <SidebarFooter>
+            <NavFooter :items="footerNavItems" />
+            <NavUser />
+        </SidebarFooter>
+    </Sidebar>
+    <slot />
+</template>
+
 ```
 
 # Create Folders and Vue Files
@@ -121,30 +190,37 @@ this file acts like a sub menu of the side bar main menu
 * /resources/js/pages/viewjs/complaint/Layout.vue
 
 ```sh
+
 <script setup lang="ts">
+import { Link, /*usePage*/ } from '@inertiajs/vue3';
 import Heading from '@/components/Heading.vue';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
-import { type NavItem } from '@/types';
-import { Link, usePage } from '@inertiajs/vue3';
+
+import {
+    index as index_complaint,
+    create as create_complaint
+} from '@/routes/complaint';
+
+import type { NavItem } from '@/types';
 
 const modelName = "Customer Complaints Page";
 const description = "This is the model for customer complaints. You can view, create, update, and delete complaints.";
 const sidebarNavItems: NavItem[] = [
     {
-        title: 'Search',
-        href: '/complaint',
+        title: 'Complaint Index',
+        href: index_complaint(),
     },
     {
         title: 'Create New',
-        href: '/complaint/create',
+        href: create_complaint(),
     },
-    
+
 ];
 
-const page = usePage();
+//const page = usePage();
 
-const currentPath = page.props.ziggy?.location ? new URL(page.props.ziggy.location).pathname : '';
+//const currentPath = page.props.ziggy?.location ? new URL(page.props.ziggy.location).pathname : '';
 </script>
 
 <template>
@@ -178,6 +254,8 @@ const currentPath = page.props.ziggy?.location ? new URL(page.props.ziggy.locati
         </div>
     </div>
 </template>
+
+
 ```
 
 ---------------------------------------------------------
@@ -190,18 +268,25 @@ this file acts to insert new data to database
 
 ```sh
 
+
 <script setup lang="ts">
+import { Head, useForm, /*usePage,*/ } from '@inertiajs/vue3';
 import { ref, } from 'vue';
-import { Head, Link, useForm, usePage, } from '@inertiajs/vue3';
-import DeleteUser from '@/components/DeleteUser.vue';
-import HeadingSmall from '@/components/HeadingSmall.vue';
+import Heading from '@/components/Heading.vue';
 import InputError from '@/components/InputError.vue';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import AppLayout from '@/layouts/AppLayout.vue';
+
+import {
+    post as post_complaint
+} from '@/routes/complaint';
+
+import type { BreadcrumbItem, /*SharedData, User*/ } from '@/types';
 import SettingsLayout from './Layout.vue';
-import { type BreadcrumbItem, type SharedData, type User } from '@/types';
+
+
 
 interface Props {
     complaints: {type: Array,},
@@ -216,8 +301,8 @@ const breadcrumbs: BreadcrumbItem[] = [{
     href: '/complaint/create',
 },];
 
-const page = usePage<SharedData>();
-const user = page.props.auth.user as User;
+//const page = usePage<SharedData>();
+//const user = page.props.auth.user as User;
 
 const form = useForm({
     accountnumber:"",
@@ -236,12 +321,12 @@ const form = useForm({
 const imageURL = ref();
 const onPictureChange = (event) => {
     const files = event.target.files;
-    imageURL.value = URL.createObjectURL(files[0]); 
+    imageURL.value = URL.createObjectURL(files[0]);
     form.image_file = files[0];
 };
 
 const submit = () => {
-    form.post(route('complaint.post'), {
+    form.post(post_complaint(), {
         preserveScroll: true,
     });
 };
@@ -254,7 +339,7 @@ const submit = () => {
         <Head v-bind:title="headTitle" />
         <SettingsLayout>
             <div class="flex flex-col space-y-6">
-                <HeadingSmall v-bind:title="headTitle" v-bind:description="description" />
+                <Heading v-bind:title="headTitle" v-bind:description="description" />
                 <form @submit.prevent="submit" class="space-y-6">
                     <div class="grid gap-2">
                         <Label for="accountnumber">Account Number</Label>
@@ -272,7 +357,7 @@ const submit = () => {
 
                     <div class="grid gap-2">
                         <Label for="address">Address</Label>
-                        <Input id="name" class="mt-1 block w-full" v-model="form.address" required autocomplete="address"
+                        <Input id="addtrss" class="mt-1 block w-full" v-model="form.address" required autocomplete="address"
                             placeholder="Address" />
                         <InputError class="mt-2" :message="form.errors.address" />
                     </div>
@@ -293,14 +378,14 @@ const submit = () => {
 
                     <div v-if="imageURL" class="grid gap-2">
                         <img :src="imageURL" alt="" srcset="" class="border-2 rounded-lg">
-                    </div>  
+                    </div>
 
                     <div class="grid gap-2">
                         <Label for="picture">Picture</Label>
                         <Input type="file" accept="image/*" @change="onPictureChange" id="picture" class="mt-1 block w-full"  required autocomplete="picture"
                             placeholder="picture" />
                         <InputError class="mt-2" :message="form.errors.picture" />
-                    </div>                 
+                    </div>
 
                     <div class="flex items-center gap-4">
                         <div class="ml-auto my-auto">
@@ -318,6 +403,7 @@ const submit = () => {
     </AppLayout>
 </template>
 
+
 ```
 
 ### Edit View
@@ -328,22 +414,28 @@ this file acts to edit 1 data row from database
 
 ```sh
 
+
 <script setup lang="ts">
 
-import { Head, Link, useForm, usePage } from '@inertiajs/vue3';
-import DeleteUser from '@/components/DeleteUser.vue';
-import HeadingSmall from '@/components/HeadingSmall.vue';
+import { Head, useForm, /*Link, usePage */} from '@inertiajs/vue3';
+
+import { ref } from 'vue';
+import Heading from '@/components/Heading.vue';
 import InputError from '@/components/InputError.vue';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import AppLayout from '@/layouts/AppLayout.vue';
+
+import {
+    update as update_complaint,
+} from '@/routes/complaint';
+
+import type { BreadcrumbItem, /* SharedData, User*/ } from '@/types';
 import SettingsLayout from './Layout.vue';
-import { type BreadcrumbItem, type SharedData, type User } from '@/types';
-import { ref } from 'vue';
 
 interface Props {
-    complaint: Object,
+    complaint: object,
 }
 
 const props = defineProps<Props>();
@@ -355,8 +447,8 @@ const breadcrumbs: BreadcrumbItem[] = [{
     href: '/complaint/edit',
 },];
 
-const page = usePage<SharedData>();
-const user = page.props.auth.user as User;
+//const page = usePage<SharedData>();
+//const user = page.props.auth.user as User;
 
 const form = useForm({
     id: props.complaint.id,
@@ -380,7 +472,7 @@ const encodeImageFileAsURL = (event) => {
 
 const submit = () => {
     console.log(form);
-    form.post(route('complaint.update', { id: form.id }), {
+    form.post(update_complaint({ id: form.id }), {
         preserveScroll: true,
     });
 };
@@ -392,7 +484,7 @@ const submit = () => {
         <Head v-bind:title="headTitle" />
         <SettingsLayout>
             <div class="flex flex-col space-y-6">
-                <HeadingSmall v-bind:title="headTitle" v-bind:description="description" />
+                <Heading v-bind:title="headTitle" v-bind:description="description" />
                 <form @submit.prevent="submit" class="space-y-6">
                     <div class="grid gap-2">
                         <Label for="accountnumber">Account Number</Label>
@@ -441,7 +533,7 @@ const submit = () => {
 
                     <div class="flex items-center gap-4">
                         <div class="ml-auto my-auto">
-                            <Button :disabled="form.processing">Save</Button>
+                            <Button :disabled="form.processing">Update</Button>
                             <Transition enter-active-class="transition ease-in-out" enter-from-class="opacity-0"
                                 leave-active-class="transition ease-in-out" leave-to-class="opacity-0">
                                 <p v-show="form.recentlySuccessful" class="text-sm text-neutral-600">Saved.</p>
@@ -455,6 +547,7 @@ const submit = () => {
     </AppLayout>
 </template>
 
+
 ```
 
 ### Index View
@@ -464,27 +557,33 @@ this file acts as db grid to show all data from database
 * resources/js/pages/viewjs/complaint/index.vue
 
 ```sh
+
 <script setup lang="ts">
+
+import { Head, Link, useForm, /* usePage */} from '@inertiajs/vue3';
+import Heading from '@/components/Heading.vue';
+import InputError from '@/components/InputError.vue';
+import { Button } from '@/components/ui/button';
 
 import {
     DropdownMenu,
     DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
-import { Head, Link, useForm, usePage } from '@inertiajs/vue3';
-import DeleteUser from '@/components/DeleteUser.vue';
-import HeadingSmall from '@/components/HeadingSmall.vue';
-import InputError from '@/components/InputError.vue';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import AppLayout from '@/layouts/AppLayout.vue';
+
+import {
+    index as index_complaint,
+    show as show_complaint,
+    edit as edit_complaint,
+} from '@/routes/complaint';
+
+import type {  BreadcrumbItem, /* SharedData,  User */ } from '@/types';
 import SettingsLayout from './Layout.vue';
-import { type BreadcrumbItem, type SharedData, type User } from '@/types';
+
 
 interface Props {
     complaints: { type: Array, },
@@ -500,15 +599,15 @@ const breadcrumbs: BreadcrumbItem[] = [{
     href: '/complaint',
 },];
 
-const page = usePage<SharedData>();
-const user = page.props.auth.user as User;
+//const page = usePage<SharedData>();
+//const user = page.props.auth.user as User;
 
 const form = useForm({
     'accountnumber': props.accountnumber,
 });
 
 const submit = () => {
-    form.get(route('complaint.index'), {
+    form.get(index_complaint(), {
         preserveScroll: true,
     });
 };
@@ -520,7 +619,7 @@ const submit = () => {
         <Head v-bind:title="headTitle" />
         <SettingsLayout>
             <div class="flex flex-col space-y-6">
-                <HeadingSmall v-bind:title="headTitle" v-bind:description="description" />
+                <Heading v-bind:title="headTitle" v-bind:description="description" />
                 <form @submit.prevent="submit" class="space-y-6">
 
                     <div class="grid gap-2">
@@ -582,19 +681,11 @@ const submit = () => {
                                             <DropdownMenuContent>
                                                 <div
                                                     class="flex p-2 space-y-2 border-b border-neutral-200 dark:border-white/10">
-                                                    <Link :href="route(
-                                                        'complaint.show',
-                                                        [complaint.id]
-                                                    )
-                                                        " class="p-2 px-5 rounded my-auto text-white bg-green-600 m-2">
+                                                    <Link :href="show_complaint({ id: complaint.id })" class="p-2 px-5 rounded my-auto text-white bg-green-600 m-2">
                                                     View
                                                     </Link>
 
-                                                    <Link :href="route(
-                                                        'complaint.edit',
-                                                        { id: complaint.id }
-                                                    )
-                                                        " class="p-2 px-6 rounded my-auto text-white bg-blue-500 m-2">
+                                                    <Link :href="edit_complaint({ id: complaint.id })" class="p-2 px-6 rounded my-auto text-white bg-blue-500 m-2">
                                                     Edit
                                                     </Link>
 
@@ -610,7 +701,7 @@ const submit = () => {
 
                                             </DropdownMenuContent>
                                         </DropdownMenu>
-                                        <div v-if="complaint.picture" class="grid gap-2 w-[50px]">
+                                        <div v-if="complaint.picture" class="grid gap-2 w-12.5">
                                             <img :src="complaint.picture" alt="" srcset="" class="border-2 rounded-lg">
                                         </div>
                                     </td>
@@ -653,21 +744,27 @@ this file acts to show 1 row data from database
 
 ```sh
 
-<script setup lang="ts">
-import { Head, Link, useForm, usePage } from '@inertiajs/vue3';
 
-import DeleteUser from '@/components/DeleteUser.vue';
-import HeadingSmall from '@/components/HeadingSmall.vue';
+<script setup lang="ts">
+import { Head, /*Link,*/ useForm, /* usePage */ } from '@inertiajs/vue3';
+
+//import Heading from '@/components/Heading.vue';
 import InputError from '@/components/InputError.vue';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import AppLayout from '@/layouts/AppLayout.vue';
+
+import {
+    index as index_complaint
+} from '@/routes/complaint';
+
+import type { BreadcrumbItem, /* SharedData, User */ } from '@/types';
 import SettingsLayout from './Layout.vue';
-import { type BreadcrumbItem, type SharedData, type User } from '@/types';
+
 
 interface Props {
-    complaint: Object,
+    complaint: object,
 }
 
 const props = defineProps<Props>();
@@ -679,12 +776,12 @@ const breadcrumbs: BreadcrumbItem[] = [{
     href: '/complaint/view',
 },];
 
-const page = usePage<SharedData>();
-const user = page.props.auth.user as User;
+//const page = usePage<SharedData>();
+//const user = page.props.auth.user as User;
 
 const form = useForm({
     id            :props.complaint.id,
-    accountnumber :props.complaint.accountnumber, 
+    accountnumber :props.complaint.accountnumber,
     name          :props.complaint.name,
     address       :props.complaint.address,
     complaint     :props.complaint.complaint,
@@ -696,7 +793,7 @@ const form = useForm({
 
 
 const submit = () => {
-    form.get(route('complaint.index'), {
+    form.get(index_complaint(), {
         preserveScroll: true,
     });
 };
@@ -710,6 +807,25 @@ const submit = () => {
             <div class="flex flex-col space-y-6">
                 <HeadingSmall v-bind:title="headTitle" v-bind:description="description" />
                 <form @submit.prevent="submit" class="space-y-6">
+
+                    <div v-if="form.picture" class="grid gap-2">
+                        <img :src="form.picture" alt="" srcset="" class="border-2 rounded-lg">
+                    </div>
+
+                    <div class="grid gap-2">
+                        <Label for="complaint">Complaint</Label>
+                        <Input id="complaint" class="mt-1 block w-full" v-model="form.complaint" required autocomplete="complaint"
+                            placeholder="complaint" />
+                        <InputError class="mt-2" :message="form.errors.complaint" />
+                    </div>
+
+                    <div class="grid gap-2">
+                        <Label for="description">Description</Label>
+                        <Input id="description" class="mt-1 block w-full" v-model="form.description" required autocomplete="description"
+                            placeholder="Description" />
+                        <InputError class="mt-2" :message="form.errors.description" />
+                    </div>
+
                     <div class="grid gap-2">
                         <Label for="accountnumber">Account Number</Label>
                         <Input id="accountnumber" class="mt-1 block w-full" v-model="form.accountnumber" required autocomplete="accountnumber"
@@ -730,24 +846,6 @@ const submit = () => {
                             placeholder="Address" />
                         <InputError class="mt-2" :message="form.errors.address" />
                     </div>
-
-                    <div class="grid gap-2">
-                        <Label for="complaint">Complaint</Label>
-                        <Input id="complaint" class="mt-1 block w-full" v-model="form.complaint" required autocomplete="complaint"
-                            placeholder="complaint" />
-                        <InputError class="mt-2" :message="form.errors.complaint" />
-                    </div>
-
-                    <div class="grid gap-2">
-                        <Label for="description">Description</Label>
-                        <Input id="description" class="mt-1 block w-full" v-model="form.description" required autocomplete="description"
-                            placeholder="Description" />
-                        <InputError class="mt-2" :message="form.errors.description" />
-                    </div>
-
-                    <div v-if="form.picture" class="grid gap-2">
-                        <img :src="form.picture" alt="" srcset="" class="border-2 rounded-lg">
-                    </div> 
 
                     <div class="grid gap-2">
                         <Label for="created_at">Created At</Label>
@@ -778,6 +876,7 @@ const submit = () => {
         </SettingsLayout>
     </AppLayout>
 </template>
+
 
 ```
 
