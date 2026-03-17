@@ -65,7 +65,7 @@ return [
 Note: to make a route that is not data related
 
 ```sh
-php artisan make:controller MyController --resource
+php artisan make:controller MapController --resource
 ```
 
 ## Create Complete Model, Controller, Request, migrations
