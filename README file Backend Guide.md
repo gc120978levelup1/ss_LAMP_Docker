@@ -104,7 +104,7 @@ Replace the following code in [return new class extends Migration] function
     public function up(): void
     {
         Schema::table('complaints', function (Blueprint $table) {
-            $table->string('description');
+            $table->string('description')->nullable();
         });
     }
 
@@ -114,7 +114,7 @@ Replace the following code in [return new class extends Migration] function
     public function down(): void
     {
         Schema::table('complaints', function (Blueprint $table) {
-            $table->dropColumn('description')->nullable();
+            $table->dropColumn('description');
         });
     }
 ```
