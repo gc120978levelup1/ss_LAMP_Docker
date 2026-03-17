@@ -61,6 +61,13 @@ return [
 ];
 ```
 
+## Create only a Controller with resources
+Note: to make a route that is not data related
+
+```sh
+php artisan make:controller MyController --resource
+```
+
 ## Create Complete Model, Controller, Request, migrations
 Note: model name should be capitalized and singular forn
 
