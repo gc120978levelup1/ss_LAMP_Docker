@@ -126,17 +126,12 @@ const mainNavItems: NavItem[] = [
     {
         title: 'Dashboard',
         href: dashboard(),
-        icon: LayoutGrid,
+        icon: Map,
     },
     {
         title: 'Complaint',
         href: index_complaint(),
         icon: Hammer,
-    },
-    {
-        title: 'Map (Leaflet)',
-        href: show_map(),
-        icon: Map,
     },
 ];
 
