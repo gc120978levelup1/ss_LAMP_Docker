@@ -5,6 +5,7 @@ networks:
       driver: default
       config:
         - subnet: 192.168.0.0/16 # Define the subnet for the network
+
 services:
   dbhost:
     build: 
@@ -62,6 +63,8 @@ services:
       - './redis-data:/data'
     ports:
       - 6379:6379
+    environment:
+      - REDIS_ARGS=--requirepass my_redis_password --appendonly yes
     networks:
       static-network:
         ipv4_address: 192.168.0.40 # Assign the static IP
