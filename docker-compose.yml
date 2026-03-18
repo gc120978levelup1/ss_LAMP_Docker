@@ -27,7 +27,7 @@ services:
       static-network:
         ipv4_address: 192.168.0.10 # Assign the static IP
 
-  localhost:
+  apache.server:
     build: 
       context: ./context/php-apache
     container_name: 'apache-server'

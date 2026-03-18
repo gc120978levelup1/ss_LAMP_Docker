@@ -2,13 +2,13 @@
 
 # Copy the appropriate .env file and docker-compose.yml
 # equal to DB_DATABASE in .env
-database_name="www-garry-com"
+database_name="my-app-database"
 
 # Database Server Container Name in docker-compose.yml (mysql)
-database_server="database.garry.com"
+database_server="dbhost"
 
 # Webserver (WWW) Container Name in docker-compose.yml (apache/php)
-webserver_name="www.garry.com"
+webserver_name="apache.server"
 
 function control_panel {
     echo "==================================================================="
@@ -84,6 +84,7 @@ then
     echo "Marging Garry's Mod server to Project...$2"
     cp -r -a ./context ../
     cp -r -a ./database_folder ../
+    cp -r -a ./redis-data ../
     cp -r -a ./.env ../
     cp -r -a ./docker-compose.yml ../
     cp -r -a ./ss ../
