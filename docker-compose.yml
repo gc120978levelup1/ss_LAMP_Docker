@@ -7,7 +7,7 @@ networks:
         - subnet: 172.20.0.0/24 # Define the subnet for the network
           gateway: 172.20.0.1 # Define the gateway
 services:
-  ${DB_HOST}:
+  dbhost:
     build: 
       context: ./context/mysql
     container_name: 'database-mysql-server'
