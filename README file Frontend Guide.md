@@ -255,6 +255,7 @@ npm install bootstrap-icons
 npm install uid
 npm install @iconify/vue
 npm install @popperjs/core
+npm install -D sass-embedded
 
 ```
 
