@@ -1,11 +1,10 @@
 
 networks:
   static-network:
-    driver: bridge
     ipam:
+      driver: default
       config:
-        - subnet: 172.20.0.0/24 # Define the subnet for the network
-          gateway: 172.20.0.1 # Define the gateway
+        - subnet: 172.20.0.0/16 # Define the subnet for the network
 services:
   dbhost:
     build: 
