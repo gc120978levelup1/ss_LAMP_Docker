@@ -184,7 +184,7 @@ const footerNavItems: NavItem[] = [
 
 # Create Folders and Vue Files
 
-## Insttall Leaflet for mapping and others
+## Install Leaflet for mapping and others
 
 ```sh
 
@@ -198,9 +198,6 @@ npm install @popperjs/core
 ```
 
 ## Modify app.css
-
-
-## Modify Dashboard.vue
 
 copy and replace
 
@@ -375,6 +372,7 @@ copy and replace
 
 ```
 
+## Modify Dashboard.vue
 
 * /resources/js/pages/Dashboard.vue
 
