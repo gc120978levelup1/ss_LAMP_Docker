@@ -3,7 +3,7 @@ networks:
   lamp-docker-network:
     driver: bridge
 services:
-  localhost:
+  ${DB_HOST}:
     build: 
       context: ./context/mysql
     container_name: 'database-mysql-server'
@@ -22,7 +22,7 @@ services:
     networks:
       - lamp-docker-network
 
-  www.garry.com:
+  localhost:
     build: 
       context: ./context/php-apache
     container_name: 'apache-server'
@@ -43,7 +43,7 @@ services:
     ports:
       - 8001:80
     environment:
-      - PMA_HOST=localhost
+      - PMA_HOST=${DB_HOST}
       - PMA_PORT=3306
     networks:
       - lamp-docker-network
