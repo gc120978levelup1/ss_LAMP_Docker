@@ -90,7 +90,7 @@ https://lucide.dev/icons/
 ------------------------------------------------------------------
 
 ### File for Editing Main Side Bar Menu (below "Platform")*most important
-### Add More Menu in the Side Bar
+## Add More Menu in the Side Bar
 
 * /resources/js/components/AppSidebar.vue
 
@@ -99,8 +99,8 @@ copy and replace the code below ...
 ```sh
 
 <script setup lang="ts">
-import { Link } from '@inertiajs/vue3';
-import { BookOpen, FolderGit2, LayoutGrid, Hammer, Map } from 'lucide-vue-next';
+import { Link, } from '@inertiajs/vue3';
+import { UserPen, LayoutGrid, Hammer, Map } from 'lucide-vue-next';
 import AppLogo from '@/components/AppLogo.vue';
 import NavFooter from '@/components/NavFooter.vue';
 import NavMain from '@/components/NavMain.vue';
@@ -118,6 +118,7 @@ import {
 import { dashboard } from '@/routes';
 import { index as index_complaint } from '@/routes/complaint';
 import { show as show_map } from '@/routes/map';
+import { edit } from '@/routes/profile';
 
 import type { NavItem } from '@/types';
 
@@ -141,20 +142,16 @@ const mainNavItems: NavItem[] = [
 
 const footerNavItems: NavItem[] = [
     {
-        title: 'Repository',
-        href: 'https://github.com/laravel/vue-starter-kit',
-        icon: FolderGit2,
-    },
-    {
-        title: 'Documentation',
-        href: 'https://laravel.com/docs/starter-kits#vue',
-        icon: BookOpen,
+        title: 'Edit My Profile',
+        href: edit(),
+        icon: UserPen,
     },
 ];
+
 </script>
 
 <template>
-    <Sidebar collapsible="icon" variant="inset"  class=" z-2000 ">
+    <Sidebar collapsible="icon" variant="inset" class=" z-2000 ">
         <SidebarHeader>
             <SidebarMenu>
                 <SidebarMenuItem>
@@ -171,9 +168,9 @@ const footerNavItems: NavItem[] = [
             <NavMain :items="mainNavItems" />
         </SidebarContent>
 
-        <SidebarFooter>
+        <SidebarFooter class=" z-3000 ">
             <NavFooter :items="footerNavItems" />
-            <NavUser />
+            <NavUser class=" z-4000 " />
         </SidebarFooter>
     </Sidebar>
     <slot />
@@ -181,6 +178,75 @@ const footerNavItems: NavItem[] = [
 
 
 ```
+
+------------------------------------------------------------------
+
+### Nav Footer
+## Modify NavFooter to activate logout
+
+* /resources/js/components/AppSidebar.vue
+
+copy and replace the code below ...
+
+```sh
+
+<script setup lang="ts">
+import { Link, router } from '@inertiajs/vue3';
+import { LogOut } from 'lucide-vue-next';
+import {
+    SidebarGroup,
+    SidebarGroupContent,
+    SidebarMenu,
+    SidebarMenuButton,
+    SidebarMenuItem,
+} from '@/components/ui/sidebar';
+import { toUrl } from '@/lib/utils';
+import { logout } from '@/routes';
+import type { NavItem } from '@/types';
+
+type Props = {
+    items: NavItem[];
+    class?: string;
+};
+
+defineProps<Props>();
+
+const handleLogout = () => {
+    router.flushAll();
+};
+
+</script>
+
+<template>
+    <SidebarGroup :class="`group-data-[collapsible=icon]:p-0 ${$props.class || ''}`">
+        <SidebarGroupContent>
+            <SidebarMenu>
+                <SidebarMenuItem v-for="item in items" :key="item.title">
+                    <SidebarMenuButton
+                        class="text-neutral-600 hover:text-neutral-800 dark:text-neutral-300 dark:hover:text-neutral-100"
+                        as-child>
+                        <a :href="toUrl(item.href)" target="_blank" rel="noopener noreferrer">
+                            <component :is="item.icon" />
+                            <span>{{ item.title }}</span>
+                        </a>
+                    </SidebarMenuButton>
+                </SidebarMenuItem>
+                <SidebarMenuButton>
+                    <Link
+                        class="flex text-neutral-600 hover:text-neutral-800 dark:text-neutral-300 dark:hover:text-neutral-100"
+                        :href="logout()" @click="handleLogout" as="button" data-test="logout-button">
+                        <LogOut class="mr-2 h-4 w-4" />
+                        Log out
+                    </Link>
+                </SidebarMenuButton>
+            </SidebarMenu>
+        </SidebarGroupContent>
+    </SidebarGroup>
+</template>
+
+```
+
+------------------------------------------------------------------
 
 # Create Folders and Vue Files
 
