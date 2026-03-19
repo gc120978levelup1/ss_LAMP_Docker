@@ -5,10 +5,10 @@
 database_name="my-app-database"
 
 # Database Server Container Name in docker-compose.yml (mysql)
-database_server="dbhost"
+database_server="database-mysql-server"
 
 # Webserver (WWW) Container Name in docker-compose.yml (apache/php)
-webserver_name="apache.server"
+webserver_name="apache-server"
 
 function control_panel {
     echo "==================================================================="
@@ -96,4 +96,3 @@ else
     clear
     control_panel
 fi
-
