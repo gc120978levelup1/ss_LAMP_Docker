@@ -38,12 +38,12 @@ RUN npm run build
 
 # RUN php database and file migration
 RUN php artisan storage:link
-RUN php artisan migrate --force
 
 # copy apache settings for Laravel Hosting
 COPY 000-default.conf /etc/apache2/sites-enabled/
 
 # uncomment during production
+# RUN php artisan migrate --force
 # RUN echo "Listen 0.0.0.0:80" >> /etc/apache2/apache2.conf
 
 # Enable Apache Web Service
