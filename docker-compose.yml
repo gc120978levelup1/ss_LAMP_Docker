@@ -8,7 +8,7 @@ networks:
 
 services:
   dbhost:
-    build: 
+    build:
       context: ./context/mysql
     container_name: 'database-mysql-server'
     restart: 'always'
@@ -23,6 +23,12 @@ services:
       - "./database_folder:/docker-entrypoint-initdb.d"
     ports:
       - '33601:3306'
+    healthcheck:
+      test: ["CMD", "mysql", "--user=root", "--password=$$MYSQL_ROOT_PASSWORD", "-e", "SHOW DATABASES;"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
     networks:
       static-network:
         ipv4_address: 192.168.0.10 # Assign the static IP
@@ -40,6 +46,12 @@ services:
       PGDATA: /data/postgres
     ports:
       - '54321:5432' # Maps the container's port 5432 to the host machine's port 5432
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s # Grace period for the DB to initialize on first run
     volumes:
       - postgres_data:/data/postgres # Persists data to a named volume
     networks:
@@ -48,8 +60,10 @@ services:
 
   apache.server:
     depends_on:
-      - dbhost
-      - pghost
+      pghost:
+         condition: service_healthy
+      dbhost:
+        condition: service_healthy
     build:
       context: ./
     container_name: 'apache-server'
@@ -78,7 +92,7 @@ services:
         ipv4_address: 192.168.0.40 # Assign the static IP
 
   phpmyadmin.garry.com:
-    build: 
+    build:
       context: ./context/phpmyadmin
     container_name: 'phpmyadmin-garry-com'
     restart: 'always'
@@ -87,6 +101,9 @@ services:
     environment:
       - PMA_HOST=192.168.0.10
       - PMA_PORT=3306
+    depends_on:
+      dbhost:
+        condition: service_healthy
     networks:
       static-network:
         ipv4_address: 192.168.0.50 # Assign the static IP
@@ -99,6 +116,9 @@ services:
       - 8081:8080
     environment:
       ADMINER_DEFAULT_SERVER: 'pghost'
+    depends_on:
+      pghost:
+         condition: service_healthy
     networks:
       static-network:
         ipv4_address: 192.168.0.50 # Assign the static IP
