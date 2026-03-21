@@ -24,6 +24,10 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 RUN docker-php-ext-install mysqli && docker-php-ext-enable mysqli
 
 # -----------------------------------------------------------------------------------------------------------
+# Own and Modify html folder
+RUN chown -R root:root /var/www/html
+RUN chmod -R 777 /var/www/html
+
 # Copy the application code
 # Copy all the web app code to the linux Apache html folder
 COPY . /var/www/html
@@ -49,7 +53,5 @@ COPY 000-default.conf /etc/apache2/sites-enabled/
 # Enable Apache Web Service
 RUN a2enmod rewrite
 RUN apachectl restart
-RUN chown -R root:root /var/www/html
-RUN chmod -R 777 /var/www/html
 
 EXPOSE 80
