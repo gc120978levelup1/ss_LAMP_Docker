@@ -22,14 +22,33 @@ services:
     volumes:
       - "./database_folder:/docker-entrypoint-initdb.d"
     ports:
-      - '${DB_PORT}:3306'
+      - '33601:3306'
     networks:
       static-network:
         ipv4_address: 192.168.0.10 # Assign the static IP
 
+  pghost:
+    image: postgres:16 # Use the official PostgreSQL image from Docker Hub
+    restart: always # Ensures the container restarts if it fails
+    container_name: 'database-pgsql-server'
+    environment:
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_DATABASE}
+      POSTGRES_HOST_AUTH_METHOD: scram-sha-256
+      POSTGRES_INITDB_ARGS: --auth-host=scram-sha-256
+      PGDATA: /data/postgres
+    ports:
+      - '54321:5432' # Maps the container's port 5432 to the host machine's port 5432
+    volumes:
+      - postgres_data:/data/postgres # Persists data to a named volume
+    networks:
+      static-network:
+        ipv4_address: 192.168.0.20 # Assign the static IP
+
   apache.server:
-    build: 
-      context: ./context/php-apache
+    build:
+      context: ./
     container_name: 'apache-server'
     restart: 'always'
     volumes:
@@ -39,7 +58,21 @@ services:
       - 443:443
     networks:
       static-network:
-        ipv4_address: 192.168.0.20 # Assign the static IP
+        ipv4_address: 192.168.0.30 # Assign the static IP
+
+  redis:
+    image: 'redis:latest'
+    container_name: 'my-redis-server'
+    restart: 'always'
+    volumes:
+      - './redis-data:/data'
+    ports:
+      - 6379:6379
+    environment:
+      - REDIS_ARGS=--requirepass my_redis_password --appendonly yes
+    networks:
+      static-network:
+        ipv4_address: 192.168.0.40 # Assign the static IP
 
   phpmyadmin.garry.com:
     build: 
@@ -53,18 +86,19 @@ services:
       - PMA_PORT=3306
     networks:
       static-network:
-        ipv4_address: 192.168.0.30 # Assign the static IP
+        ipv4_address: 192.168.0.50 # Assign the static IP
 
-  redis:
-    image: 'redis:latest'
-    container_name: 'my-redis'
+  adminer:
+    image: adminer:latest
+    container_name: 'php-adminer-db-admin'
     restart: 'always'
-    volumes:
-      - './redis-data:/data'
     ports:
-      - 6379:6379
+      - 8081:8080
     environment:
-      - REDIS_ARGS=--requirepass my_redis_password --appendonly yes
+      ADMINER_DEFAULT_SERVER: 'pghost'
     networks:
       static-network:
-        ipv4_address: 192.168.0.40 # Assign the static IP
+        ipv4_address: 192.168.0.50 # Assign the static IP
+
+volumes:
+  postgres_data: # Defines the named volume for data persistence
