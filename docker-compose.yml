@@ -47,6 +47,9 @@ services:
         ipv4_address: 192.168.0.20 # Assign the static IP
 
   apache.server:
+    depends_on:
+      - dbhost
+      - pghost
     build:
       context: ./
     container_name: 'apache-server'
