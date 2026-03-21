@@ -15,6 +15,39 @@ php artisan storage:link
 php artisan migrate
 ```
 
+### AppServiceProvider.php
+
+Copy and paste the code below to replace /app/Providers/AppServiceProvider.php
+```sh
+<?php
+
+namespace App\Providers;
+
+use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\URL;
+
+class AppServiceProvider extends ServiceProvider
+{
+    /**
+     * Register any application services.
+     */
+    public function register(): void
+    {
+        //
+    }
+
+    /**
+     * Bootstrap any application services.
+     */
+    public function boot(): void
+    {
+        if ($this->app->environment('production')) {
+            URL::forceScheme('https');
+        }
+    }
+}
+```
+
 ### Add alphaenvironment.php to the folder /config
 Note: The value of AWS_URL found in .env file can be obtained by buying buckets from AWS S3, Cloudflare R2 and MinIO, etc ...  
 
