@@ -44,7 +44,7 @@ RUN php artisan migrate --force
 COPY 000-default.conf /etc/apache2/sites-enabled/
 
 # uncomment during production
-RUN echo "Listen 0.0.0.0:80" >> /etc/apache2/apache2.conf
+# RUN echo "Listen 0.0.0.0:80" >> /etc/apache2/apache2.conf
 
 # Enable Apache Web Service
 RUN a2enmod rewrite
