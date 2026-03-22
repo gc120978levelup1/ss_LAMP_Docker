@@ -23,10 +23,6 @@ services:
       - "./database_folder:/docker-entrypoint-initdb.d"
     ports:
       - '33601:3306'
-    healthcheck:
-      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
-      timeout: 5s
-      retries: 5
     networks:
       static-network:
         ipv4_address: 192.168.0.10 # Assign the static IP
@@ -61,7 +57,7 @@ services:
       pghost:
          condition: service_healthy
       dbhost:
-        condition: service_healthy
+        condition: service_completed_successfully
     build:
       context: ./
     container_name: 'apache-server'
@@ -101,7 +97,7 @@ services:
       - PMA_PORT=3306
     depends_on:
       dbhost:
-        condition: service_healthy
+        condition: service_completed_successfully
     networks:
       static-network:
         ipv4_address: 192.168.0.50 # Assign the static IP
