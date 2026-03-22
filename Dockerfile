@@ -10,6 +10,9 @@ RUN apt-get install -y nodejs npm
 # Install Additional System Dependencies
 RUN apt-get install git zip libzip-dev zlib1g-dev libpq-dev -y
 
+# Install redis for cacheing
+RUN apt-get install redis php8.4-redis -y
+
 # Clear cache
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
