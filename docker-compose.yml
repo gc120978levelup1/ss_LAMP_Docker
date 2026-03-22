@@ -56,7 +56,6 @@ services:
     depends_on:
       pghost:
          condition: service_healthy
-      dbhost:
     build:
       context: ./
     container_name: 'apache-server'
@@ -95,7 +94,7 @@ services:
       - PMA_HOST=192.168.0.10
       - PMA_PORT=3306
     depends_on:
-      dbhost:
+      apache.server:
     networks:
       static-network:
         ipv4_address: 192.168.0.50 # Assign the static IP
