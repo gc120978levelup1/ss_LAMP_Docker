@@ -24,11 +24,9 @@ services:
     ports:
       - '33601:3306'
     healthcheck:
-      test: ["CMD", "mysql", "--user=root", "--password=$$MYSQL_ROOT_PASSWORD", "-e", "SHOW DATABASES;"]
-      interval: 10s
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
       timeout: 5s
       retries: 5
-      start_period: 30s
     networks:
       static-network:
         ipv4_address: 192.168.0.10 # Assign the static IP
