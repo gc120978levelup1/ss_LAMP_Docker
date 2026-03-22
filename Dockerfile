@@ -51,6 +51,7 @@ COPY 000-default.conf /etc/apache2/sites-enabled/
 # Enable Apache Web Service
 RUN a2enmod rewrite
 RUN apachectl restart
+RUN systemctl restart php8.4-fpm.service
 RUN chown -R root:root storage bootstrap/cache
 RUN chmod -R 777 storage bootstrap/cache
 
