@@ -2,14 +2,13 @@
 FROM php:8.4-apache
 
 # Updating of application list
-RUN apt update
 RUN apt-get update -y
 
 # Instal npm and nodejs javascript frameworks
 RUN apt-get install -y nodejs npm
 
 # Install Additional System Dependencies
-RUN apt install git zip libzip-dev zlib1g-dev libpq-dev -y
+RUN apt-get install git zip libzip-dev zlib1g-dev libpq-dev -y
 
 # Clear cache
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
