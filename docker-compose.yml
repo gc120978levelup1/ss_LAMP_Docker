@@ -57,7 +57,7 @@ services:
       pghost:
          condition: service_healthy
       dbhost:
-        condition: service_completed_successfully
+         condition: service_completed_successfully
     build:
       context: ./
     container_name: 'apache-server'
