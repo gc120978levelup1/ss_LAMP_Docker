@@ -4,7 +4,7 @@ networks:
     ipam:
       driver: default
       config:
-        - subnet: 192.168.0.0/16 # Define the subnet for the network
+        - subnet: 192.168.10.0/24 # Define the subnet for the network
 
 services:
   dbhost:
@@ -25,7 +25,7 @@ services:
       - '33601:3306'
     networks:
       static-network:
-        ipv4_address: 192.168.0.10 # Assign the static IP
+        ipv4_address: 192.168.10.10 # Assign the static IP
 
   pghost:
     image: postgres:16 # Use the official PostgreSQL image from Docker Hub
@@ -50,7 +50,7 @@ services:
       - postgres_data:/data/postgres # Persists data to a named volume
     networks:
       static-network:
-        ipv4_address: 192.168.0.20 # Assign the static IP
+        ipv4_address: 192.168.10.20 # Assign the static IP
 
   apache.server:
     depends_on:
@@ -67,7 +67,7 @@ services:
       - 443:443
     networks:
       static-network:
-        ipv4_address: 192.168.0.30 # Assign the static IP
+        ipv4_address: 192.168.10.30 # Assign the static IP
 
   redis:
     image: 'redis:latest'
@@ -81,7 +81,7 @@ services:
       - REDIS_ARGS=--requirepass my_redis_password --appendonly yes
     networks:
       static-network:
-        ipv4_address: 192.168.0.40 # Assign the static IP
+        ipv4_address: 192.168.10.40 # Assign the static IP
 
   phpmyadmin.garry.com:
     build:
@@ -91,13 +91,13 @@ services:
     ports:
       - 8001:80
     environment:
-      - PMA_HOST=192.168.0.10
+      - PMA_HOST=192.168.10.10
       - PMA_PORT=3306
     depends_on:
-      apache.server:
+      - apache.server
     networks:
       static-network:
-        ipv4_address: 192.168.0.50 # Assign the static IP
+        ipv4_address: 192.168.10.50 # Assign the static IP
 
   adminer:
     image: adminer:latest
@@ -112,7 +112,7 @@ services:
          condition: service_healthy
     networks:
       static-network:
-        ipv4_address: 192.168.0.50 # Assign the static IP
+        ipv4_address: 192.168.10.60 # Assign the static IP
 
 volumes:
   postgres_data: # Defines the named volume for data persistence
