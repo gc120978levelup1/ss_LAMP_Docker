@@ -11,7 +11,8 @@ RUN apt-get install -y nodejs npm
 RUN apt-get install git zip libzip-dev zlib1g-dev libpq-dev -y
 
 # Install redis for cacheing
-RUN apt-get install redis php8.4-redis -y
+RUN pecl install redis \
+    && docker-php-ext-enable redis
 
 # Clear cache
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
@@ -19,11 +20,11 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 # Install PHP extensions for Database Access
 RUN docker-php-ext-install pdo_mysql pdo_pgsql zip
 
-# Install composer for Laravel (back end)
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-
 # Install and enable database communication
 RUN docker-php-ext-install mysqli && docker-php-ext-enable mysqli
+
+# Install composer for Laravel (back end)
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # -----------------------------------------------------------------------------------------------------------
 # Copy the application code
@@ -51,7 +52,6 @@ COPY 000-default.conf /etc/apache2/sites-enabled/
 # Enable Apache Web Service
 RUN a2enmod rewrite
 RUN apachectl restart
-RUN systemctl restart php8.4-fpm.service
 RUN chown -R root:root storage bootstrap/cache
 RUN chmod -R 777 storage bootstrap/cache
 
