@@ -1285,4 +1285,7 @@ const submit = () => {
 
 ```
 
+### Note: 
+    If page is intended for file upload. Dont let the iploaded file to travel accross pages since it will be lost even you use    cacheing. Design the interface to upload right away the said file.
+
 # All Done ... 
