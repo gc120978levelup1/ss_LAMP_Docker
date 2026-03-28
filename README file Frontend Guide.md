@@ -9,7 +9,7 @@
 ------------------------------------------------------------------
 
 ### shadcn components (primary laravel 12 frontend component)
-* https://ui.shadcn.com/docs/components/accordion
+* [https://ui.shadcn.com/docs/components](https://www.shadcn-vue.com/docs/components)
 
 ------------------------------------------------------------------
 
